@@ -72,6 +72,7 @@ import type { OutboundDeliveryResult } from "./deliver-types.js";
 import type { OutboundSendDeps } from "./deliver.js";
 import type { DurableDeliveryCompletion } from "./delivery-completion.js";
 import { shouldUseInternalSourceReplySink } from "./internal-source-reply.js";
+import { validateExplicitMessageAccountSelection } from "./message-account-selection.js";
 import { normalizeMessageActionInput } from "./message-action-normalization.js";
 import { hasPotentialPluginActionParam } from "./message-action-param-keys.js";
 import {
@@ -1020,10 +1021,16 @@ async function handleBroadcastAction(
     for (const target of rawTargets) {
       throwIfAborted(input.abortSignal);
       try {
+        const explicitAccountId = validateExplicitMessageAccountSelection({
+          cfg: input.cfg,
+          channel: targetChannel,
+          accountId: readStringParam(params, "accountId"),
+        });
         const resolved = await resolveResolvedTargetOrThrow({
           cfg: input.cfg,
           channel: targetChannel,
           input: target,
+          accountId: explicitAccountId,
         });
         const sendResult = await runMessageAction({
           ...input,
@@ -1881,6 +1888,12 @@ export async function runMessageAction(
   const channel = await resolveChannel(cfg, params, input.toolContext, action);
   params.channel = channel;
   const channelPlugin = resolveOutboundChannelPlugin({ channel, cfg });
+  const explicitAccountId = validateExplicitMessageAccountSelection({
+    cfg,
+    channel,
+    accountId: readStringParam(params, "accountId"),
+    plugin: channelPlugin,
+  });
   const pluginOwnedAction = action !== "send" && action !== "poll";
   if (
     pluginOwnedAction &&
@@ -1895,7 +1908,7 @@ export async function runMessageAction(
     toolContext: input.toolContext,
     targetAliasSpec: getChannelPlugin(channel)?.actions?.messageActionTargetAliases?.[action],
   });
-  let accountId = readStringParam(params, "accountId") ?? input.defaultAccountId;
+  let accountId = explicitAccountId ?? input.defaultAccountId;
   if (!accountId && resolvedAgentId) {
     accountId = resolveTargetBoundAccountId({
       cfg,

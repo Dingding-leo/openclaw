@@ -2583,7 +2583,10 @@ describe("runMessageAction plugin dispatch", () => {
           blurb: "Policy destination account test plugin.",
         },
         capabilities: { chatTypes: ["direct", "channel"], media: true },
-        config: createAlwaysConfiguredPluginConfig(),
+        config: {
+          ...createAlwaysConfiguredPluginConfig(),
+          listAccountIds: () => ["destination"],
+        },
         messaging: {
           targetResolver: {
             looksLikeId: () => true,
@@ -2678,7 +2681,10 @@ describe("runMessageAction plugin dispatch", () => {
           blurb: "Policy chat account fallback test plugin.",
         },
         capabilities: { chatTypes: ["direct", "channel"], media: true },
-        config: createAlwaysConfiguredPluginConfig(),
+        config: {
+          ...createAlwaysConfiguredPluginConfig(),
+          listAccountIds: () => ["source"],
+        },
         messaging: {
           targetResolver: {
             looksLikeId: () => true,
@@ -3555,6 +3561,9 @@ describe("runMessageAction plugin dispatch", () => {
 
   describe("accountId defaults", () => {
     const handleAction = vi.fn(async () => jsonResult({ ok: true }));
+    const listGroupsLive = vi.fn(async () => [
+      { id: "channel:resolved", name: "resolved", kind: "group" as const },
+    ]);
     const accountPlugin: ChannelPlugin = {
       id: "accountchat",
       meta: {
@@ -3566,9 +3575,10 @@ describe("runMessageAction plugin dispatch", () => {
       },
       capabilities: { chatTypes: ["direct"] },
       config: {
-        listAccountIds: () => ["default"],
-        resolveAccount: () => ({}),
+        listAccountIds: () => ["default", "ops", "disabled"],
+        resolveAccount: (_cfg, accountId) => ({ enabled: accountId !== "disabled" }),
       },
+      directory: { listGroupsLive },
       actions: {
         describeMessageTool: () => ({ actions: ["send"] }),
         handleAction,
@@ -3586,6 +3596,7 @@ describe("runMessageAction plugin dispatch", () => {
         ]),
       );
       handleAction.mockClear();
+      listGroupsLive.mockClear();
     });
 
     afterEach(() => {
@@ -3669,6 +3680,81 @@ describe("runMessageAction plugin dispatch", () => {
       }
       expect(ctx.accountId).toBe(expectedAccountId);
       expect(ctx.params.accountId).toBe(expectedAccountId);
+    });
+
+    it("allows an explicitly selected configured account", async () => {
+      await runMessageAction({
+        cfg: {} as OpenClawConfig,
+        action: "send",
+        params: {
+          channel: "accountchat",
+          target: "channel:123",
+          accountId: "Ops",
+          message: "hi",
+        },
+      });
+
+      expect(handleAction).toHaveBeenCalledOnce();
+      expect(readFirstPluginCall(handleAction).accountId).toBe("ops");
+    });
+
+    it.each([
+      { name: "malformed", accountId: "!!!", error: "Invalid account ID" },
+      { name: "unknown", accountId: "missing", error: "Unknown account" },
+      { name: "disabled", accountId: "disabled", error: "disabled" },
+    ])("rejects an explicitly selected $name account before plugin code", async (testCase) => {
+      await expect(
+        runMessageAction({
+          cfg: {} as OpenClawConfig,
+          action: "send",
+          params: {
+            channel: "accountchat",
+            target: "channel:123",
+            accountId: testCase.accountId,
+            message: "hi",
+          },
+        }),
+      ).rejects.toThrow(testCase.error);
+
+      expect(handleAction).not.toHaveBeenCalled();
+    });
+
+    it("rejects an unknown broadcast account before live target resolution", async () => {
+      const result = await runMessageAction({
+        cfg: {} as OpenClawConfig,
+        action: "broadcast",
+        params: {
+          channel: "accountchat",
+          targets: ["resolved"],
+          accountId: "missing",
+          message: "hi",
+        },
+      });
+
+      expect(result).toMatchObject({
+        kind: "broadcast",
+        payload: {
+          results: [{ ok: false, error: expect.stringContaining("Unknown account") }],
+        },
+      });
+      expect(listGroupsLive).not.toHaveBeenCalled();
+      expect(handleAction).not.toHaveBeenCalled();
+    });
+
+    it("preserves an unlisted host-derived binding account", async () => {
+      await runMessageAction({
+        cfg: {} as OpenClawConfig,
+        action: "send",
+        params: {
+          channel: "accountchat",
+          target: "channel:123",
+          message: "hi",
+        },
+        defaultAccountId: "binding-alias",
+      });
+
+      expect(handleAction).toHaveBeenCalledOnce();
+      expect(readFirstPluginCall(handleAction).accountId).toBe("binding-alias");
     });
   });
 });
