@@ -639,6 +639,7 @@ describe("session transcript runtime SDK", () => {
         agentId: "main",
         sessionId: "publish-session",
         sessionKey: "agent:main:main",
+        storePath: path.join(tempDir, "openclaw-agent.sqlite"),
       },
     });
     expect(internalUpdates).toEqual([
@@ -651,6 +652,7 @@ describe("session transcript runtime SDK", () => {
           agentId: "main",
           sessionId: "publish-session",
           sessionKey: "agent:main:main",
+          storePath: path.join(tempDir, "openclaw-agent.sqlite"),
         },
       },
     ]);
@@ -775,6 +777,7 @@ describe("session transcript runtime SDK", () => {
         agentId: "main",
         sessionId: "queued-publish-session",
         sessionKey: "agent:main:main",
+        storePath: path.join(tempDir, "openclaw-agent.sqlite"),
       },
     });
     await expect(readSessionTranscriptEvents(scope)).resolves.toEqual([
