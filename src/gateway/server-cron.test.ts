@@ -2841,7 +2841,7 @@ describe("buildGatewayCronService", () => {
         payload: { kind: "agentTurn", message: "keep" },
       });
       expect(job).toMatchObject({ agentId: "ops" });
-      await expect(state.cron.update(job.id, { agentId: null })).resolves.toMatchObject({
+      await expect(state.cron.update(job.id, { agentId: "" })).resolves.toMatchObject({
         agentId: "ops",
       });
     } finally {
