@@ -19,6 +19,7 @@ type DoctorConfigResult = {
   preservedLegacyRootKeys?: readonly string[];
   shouldRepairCronCodexModelRefsAfterConfigWrite?: boolean;
   blockedCodexModelIdentities?: readonly string[];
+  persistCanonicalAgentRoster?: boolean;
 };
 
 export type DoctorHealthFlowContext = {

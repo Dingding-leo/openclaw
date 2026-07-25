@@ -56,6 +56,12 @@ export async function runWriteConfigHealth(ctx: DoctorHealthFlowContext): Promis
         skipPluginValidation:
           ctx.configResult.skipPluginValidationOnWrite === true || updateDoctorRun,
         preservedLegacyRootKeys: ctx.configResult.preservedLegacyRootKeys,
+        ...(ctx.configResult.persistCanonicalAgentRoster === true
+          ? {
+              explicitSetPaths: [["agents", "entries"]],
+              explicitSetValueSource: ctx.cfg,
+            }
+          : {}),
         ...(legacyParentVersionOverride
           ? { lastTouchedVersionOverride: legacyParentVersionOverride }
           : {}),
