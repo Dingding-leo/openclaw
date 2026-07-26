@@ -204,6 +204,9 @@ export async function runNonInteractiveLocalSetup(params: {
     config: nextConfig,
     workspace: workspaceDir,
     baseConfig,
+    agentId: opts.agent,
+    runtime,
+    selectionDeps: { interactive: false },
   });
   nextConfig = applyLocalSetupWorkspaceConfig(created.config, requestedWorkspaceDir);
   // Creating the first roster agent writes the config file, so the hash captured
@@ -213,7 +216,7 @@ export async function runNonInteractiveLocalSetup(params: {
   if (opts.skipBootstrap) {
     nextConfig = applySkipBootstrapConfig(nextConfig);
   }
-  const authTarget = resolveOnboardingAgentTarget(nextConfig);
+  const authTarget = resolveOnboardingAgentTarget(nextConfig, created.agentId);
 
   const inferredAuthChoice = opts.authChoice
     ? undefined
@@ -280,7 +283,7 @@ export async function runNonInteractiveLocalSetup(params: {
   });
   logConfigUpdated(runtime);
 
-  const finalTarget = resolveOnboardingAgentTarget(nextConfig);
+  const finalTarget = resolveOnboardingAgentTarget(nextConfig, created.agentId);
   await ensureOnboardingAgentWorkspace(finalTarget, runtime, {
     skipBootstrap: Boolean(nextConfig.agents?.defaults?.skipBootstrap),
     skipOptionalBootstrapFiles: nextConfig.agents?.defaults?.skipOptionalBootstrapFiles,
