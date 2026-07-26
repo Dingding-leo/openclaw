@@ -1091,7 +1091,7 @@ export async function runPreflightCompactionIfNeeded(params: {
       cfg: params.cfg,
       sessionEntry: entry,
       sessionStore: params.sessionStore,
-      sessionKey: params.sessionKey,
+      sessionKey: compactionSessionKey,
       storePath: compactionStorePath,
       tokensAfter: result.result?.tokensAfter,
       newSessionId: result.result?.sessionId,

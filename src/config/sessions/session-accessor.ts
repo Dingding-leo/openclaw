@@ -208,6 +208,7 @@ export {
   isSessionTranscriptProjectionUnavailableError,
   readRecentSessionTranscriptActiveEvents,
   readSessionTranscriptActiveStats,
+  readSessionTranscriptBoundedMessageTailPage,
   readRecentSessionTranscriptMessageEvents,
   readSessionTranscriptActiveLeafEvents,
   readSessionTranscriptMessageAnchorPage,
@@ -219,6 +220,7 @@ export {
   SessionTranscriptProjectionUnavailableError,
 } from "./session-accessor.sqlite-active-events.js";
 export type {
+  SessionTranscriptBoundedMessageTailPage,
   SessionTranscriptMessageAnchorPage,
   SessionTranscriptMessageEvent,
   SessionTranscriptMessageEventPage,
