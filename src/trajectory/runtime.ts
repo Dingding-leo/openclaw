@@ -235,6 +235,7 @@ function createSqliteTrajectoryRuntimeSink(params: {
   maxRuntimeFileBytes: number;
   sessionFile?: string;
   sessionId: string;
+  sessionKey?: string;
   sessionTarget?: SessionTranscriptRuntimeTarget;
 }): TrajectoryRuntimeSink | null {
   const target = params.sessionTarget
@@ -250,6 +251,14 @@ function createSqliteTrajectoryRuntimeSink(params: {
     target?.agentId && target.sessionId && target.sessionKey && target.storePath,
   );
   const targetKeyAgentId = parseAgentSessionKey(target?.sessionKey)?.agentId;
+  const requestedSessionKey = normalizeOptionalString(params.sessionKey);
+  if (
+    completeTarget &&
+    ((requestedSessionKey && target?.sessionKey !== requestedSessionKey) ||
+      (targetKeyAgentId && target?.agentId !== targetKeyAgentId))
+  ) {
+    return null;
+  }
   const targetKeyEntry =
     target?.sessionKey && legacyMarker && !completeTarget
       ? loadSessionEntry({
@@ -356,6 +365,7 @@ export function createTrajectoryRuntimeRecorder(
         maxRuntimeFileBytes,
         sessionFile: params.sessionFile,
         sessionId: params.sessionId,
+        sessionKey: params.sessionKey,
         sessionTarget: params.sessionTarget,
       });
   if (!sink) {
