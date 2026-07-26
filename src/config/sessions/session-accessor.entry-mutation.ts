@@ -146,7 +146,7 @@ export async function createSessionEntryWithTranscript<TError = string>(
   ) =>
     | Promise<SessionEntryCreateWithTranscriptPrepareResult<TError>>
     | SessionEntryCreateWithTranscriptPrepareResult<TError>,
-  _options: SessionEntryCreateWithTranscriptOptions = {},
+  options: SessionEntryCreateWithTranscriptOptions = {},
 ): Promise<SessionEntryCreateWithTranscriptResult<TError>> {
   const storePath = resolveAccessStorePath(scope);
   const agentId = scope.agentId ?? resolveAgentIdFromSessionKey(scope.sessionKey);
@@ -170,7 +170,7 @@ export async function createSessionEntryWithTranscript<TError = string>(
         sessionKey: resolved.normalizedKey,
         storePath,
       },
-      createSessionTranscriptHeader({ sessionId: created.entry.sessionId }),
+      createSessionTranscriptHeader({ cwd: options.cwd, sessionId: created.entry.sessionId }),
     );
   } catch (err) {
     return {
