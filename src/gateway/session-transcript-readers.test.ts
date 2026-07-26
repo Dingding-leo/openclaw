@@ -17,6 +17,7 @@ import {
   readSessionMessageCountAsync,
   readSessionMessagesAsync,
   readSessionMessagesPageWithStatsAsync,
+  readLatestSessionUsageFromTranscriptAsync,
   type SessionTranscriptReadScope,
 } from "./session-transcript-readers.js";
 
@@ -198,6 +199,71 @@ describe("session transcript reader facade", () => {
       readSessionMessagesAsync(scope, { mode: "recent", maxMessages: 1 }),
     ).resolves.toMatchObject([{ content: "sqlite follow-up", __openclaw: { seq: 3 } }]);
     await expect(readSessionMessageCountAsync(scope)).resolves.toBe(3);
+  });
+
+  test("uses an explicit JSONL artifact when the store path is a placeholder", async () => {
+    const sessionId = "reader-artifact-placeholder-store";
+    const transcriptPath = path.join(tempDir, `${sessionId}.jsonl`);
+    fs.writeFileSync(
+      transcriptPath,
+      `${JSON.stringify({ type: "session", version: 1, id: sessionId })}\n${JSON.stringify({
+        message: {
+          role: "assistant",
+          provider: "anthropic",
+          model: "claude-sonnet-4-6",
+          usage: { input: 12, output: 3, cost: { total: 0.001 } },
+        },
+      })}\n`,
+      "utf-8",
+    );
+
+    await expect(
+      readLatestSessionUsageFromTranscriptAsync({
+        agentId: "main",
+        sessionId,
+        sessionKey: `agent:main:${sessionId}`,
+        sessionFile: transcriptPath,
+        storePath: "(multiple)",
+      }),
+    ).resolves.toMatchObject({
+      inputTokens: 12,
+      outputTokens: 3,
+    });
+  });
+
+  test("keeps a canonical session key on SQLite when the store path is a placeholder", async () => {
+    const sessionId = "reader-placeholder-sqlite-key";
+    const sessionKey = `agent:main:${sessionId}`;
+    const defaultStorePath = path.join(tempDir, "agents", "main", "sessions", "sessions.json");
+    await persistSessionTranscriptTurn(
+      { agentId: "main", sessionId, sessionKey, storePath: defaultStorePath },
+      {
+        messages: [
+          {
+            message: {
+              role: "assistant",
+              provider: "anthropic",
+              model: "claude-sonnet-4-6",
+              usage: { input: 15, output: 4, cost: { total: 0.001 } },
+            },
+          },
+        ],
+        updateMode: "file-only",
+      },
+    );
+
+    await expect(
+      readLatestSessionUsageFromTranscriptAsync({
+        agentId: "main",
+        sessionId,
+        sessionKey,
+        sessionFile: sessionKey,
+        storePath: "(multiple)",
+      }),
+    ).resolves.toMatchObject({
+      inputTokens: 15,
+      outputTokens: 4,
+    });
   });
 
   test("promotes SQLite message idempotency into transcript metadata", async () => {
