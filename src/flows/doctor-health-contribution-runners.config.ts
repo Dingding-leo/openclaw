@@ -58,7 +58,10 @@ export async function runWriteConfigHealth(ctx: DoctorHealthFlowContext): Promis
         preservedLegacyRootKeys: ctx.configResult.preservedLegacyRootKeys,
         ...(ctx.configResult.persistCanonicalAgentRoster === true
           ? {
-              explicitSetPaths: [["agents", "entries"]],
+              explicitSetPaths: [
+                ["agents", "entries"],
+                ...(ctx.cfg.agents?.ownership === "explicit" ? [["agents", "ownership"]] : []),
+              ],
               explicitSetValueSource: ctx.cfg,
             }
           : {}),

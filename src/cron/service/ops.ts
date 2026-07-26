@@ -2,6 +2,7 @@
 export {
   beginLegacyDefaultAgentOwnerHandoff,
   pauseScheduling,
+  refreshLegacyDefaultAgentOwnerHandoff,
   resumeScheduling,
   start,
   stop,
