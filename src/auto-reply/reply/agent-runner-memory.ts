@@ -42,6 +42,7 @@ import {
   readSessionTranscriptActiveStats,
   updateSessionEntry,
 } from "../../config/sessions/session-accessor.js";
+import { resolveSessionStorePathForScope } from "../../config/sessions/session-store-path.js";
 import { selectSessionTranscriptLeafControlledPath } from "../../config/sessions/transcript-tree.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
 import { readSessionMessagesAsync } from "../../gateway/session-transcript-readers.js";
@@ -825,6 +826,25 @@ export async function runPreflightCompactionIfNeeded(params: {
     return entry ?? params.sessionEntry;
   }
 
+  const compactionSessionKey = params.sessionKey ?? params.followupRun.run.sessionKey;
+  if (!compactionSessionKey) {
+    return entry ?? params.sessionEntry;
+  }
+  const keyAgentId = resolveAgentIdFromSessionKey(
+    compactionSessionKey,
+    params.followupRun.run.agentId,
+  );
+  const compactionAgentId = isUnscopedSessionKeySentinel(compactionSessionKey)
+    ? (params.followupRun.run.agentId ?? keyAgentId ?? "main")
+    : (keyAgentId ?? params.followupRun.run.agentId ?? "main");
+  const compactionStorePath = resolveSessionStorePathForScope({
+    agentId: compactionAgentId,
+    sessionKey: compactionSessionKey,
+    storePath:
+      params.storePath ??
+      resolveStorePath(params.cfg.session?.store, { agentId: compactionAgentId }),
+  });
+
   const contextWindowTokens = resolveMemoryFlushContextWindowTokens({
     cfg: params.cfg,
     provider: resolveFollowupContextConfigProvider({
@@ -869,20 +889,20 @@ export async function runPreflightCompactionIfNeeded(params: {
     typeof freshPersistedTokens === "number" && !freshNeedsOutputRead
       ? undefined
       : await estimatePromptTokensFromSessionTranscript({
-          agentId: params.followupRun.run.agentId,
+          agentId: compactionAgentId,
           sessionId: entry.sessionId,
           sessionEntry: entry,
-          sessionKey: params.sessionKey ?? params.followupRun.run.sessionKey,
-          storePath: params.storePath,
+          sessionKey: compactionSessionKey,
+          storePath: compactionStorePath,
         });
   const transcriptSizeSnapshot =
     shouldCheckActiveTranscriptBytes && transcriptUsageTokens?.transcriptByteSize === undefined
       ? await readSessionLogSnapshot({
-          agentId: params.followupRun.run.agentId,
+          agentId: compactionAgentId,
           sessionId: entry.sessionId,
           sessionEntry: entry,
-          sessionKey: params.sessionKey ?? params.followupRun.run.sessionKey,
-          opts: { agentId: params.followupRun.run.agentId, storePath: params.storePath },
+          sessionKey: compactionSessionKey,
+          opts: { agentId: compactionAgentId, storePath: compactionStorePath },
           includeByteSize: true,
           includeUsage: false,
         })
@@ -982,28 +1002,14 @@ export async function runPreflightCompactionIfNeeded(params: {
   try {
     await notifyStartCompaction();
     const sessionFile =
-      memoryDeps.resolveSessionLogPath(
-        entry.sessionId,
-        entry,
-        params.sessionKey ?? params.followupRun.run.sessionKey,
-        { agentId: params.followupRun.run.agentId, storePath: params.storePath },
-      ) ?? normalizeOptionalString(params.sessionKey ?? params.followupRun.run.sessionKey);
+      memoryDeps.resolveSessionLogPath(entry.sessionId, entry, compactionSessionKey, {
+        agentId: compactionAgentId,
+        storePath: compactionStorePath,
+      }) ?? normalizeOptionalString(compactionSessionKey);
     if (!sessionFile) {
       await notifyTerminalCompaction("skipped");
       return entry ?? params.sessionEntry;
     }
-    const compactionSessionKey = params.sessionKey ?? params.followupRun.run.sessionKey;
-    if (!compactionSessionKey) {
-      await notifyTerminalCompaction("skipped");
-      return entry ?? params.sessionEntry;
-    }
-    const keyAgentId = resolveAgentIdFromSessionKey(
-      compactionSessionKey,
-      params.followupRun.run.agentId,
-    );
-    const compactionAgentId = isUnscopedSessionKeySentinel(compactionSessionKey)
-      ? (params.followupRun.run.agentId ?? keyAgentId ?? "main")
-      : (keyAgentId ?? params.followupRun.run.agentId ?? "main");
     const result = await deps.compactEmbeddedAgentSession({
       sessionId: entry.sessionId,
       sessionKey: compactionSessionKey,
@@ -1011,9 +1017,7 @@ export async function runPreflightCompactionIfNeeded(params: {
         agentId: compactionAgentId,
         sessionId: entry.sessionId,
         sessionKey: compactionSessionKey,
-        storePath:
-          params.storePath ??
-          resolveStorePath(params.cfg.session?.store, { agentId: compactionAgentId }),
+        storePath: compactionStorePath,
       },
       sandboxSessionKey: params.runtimePolicySessionKey,
       allowGatewaySubagentBinding: true,
@@ -1083,12 +1087,12 @@ export async function runPreflightCompactionIfNeeded(params: {
     }
 
     await deps.incrementCompactionCount({
-      agentId: params.followupRun.run.agentId,
+      agentId: compactionAgentId,
       cfg: params.cfg,
       sessionEntry: entry,
       sessionStore: params.sessionStore,
       sessionKey: params.sessionKey,
-      storePath: params.storePath,
+      storePath: compactionStorePath,
       tokensAfter: result.result?.tokensAfter,
       newSessionId: result.result?.sessionId,
     });
