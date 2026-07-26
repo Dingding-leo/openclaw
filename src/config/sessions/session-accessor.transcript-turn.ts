@@ -46,6 +46,7 @@ export async function persistSessionTranscriptTurn(
     {
       sessionFile: target.sessionKey,
       sessionKey: target.sessionKey,
+      sessionTarget: target,
     },
     () => appendTranscriptTurnMessages(target, options),
   );
@@ -166,6 +167,7 @@ async function persistExpectedSessionTranscriptTurn(
     {
       sessionFile: target.sessionKey,
       sessionKey: target.sessionKey,
+      sessionTarget: target,
     },
     () =>
       appendSqliteExpectedSessionTranscriptTurn(
