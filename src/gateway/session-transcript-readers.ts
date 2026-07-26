@@ -10,6 +10,7 @@ import {
   type SessionTranscriptReadScope,
   type TranscriptEvent,
 } from "../config/sessions/session-accessor.js";
+import { resolveAgentIdFromSessionKey } from "../routing/session-key.js";
 import { hasInterSessionUserProvenance } from "../sessions/input-provenance.js";
 import { aggregateSqliteUsageSnapshots } from "./session-transcript-derived-readers.js";
 import type {
@@ -574,9 +575,8 @@ export async function readLatestSessionUsageFromTranscriptAsync(
 ): Promise<SessionTranscriptUsageSnapshot | null> {
   const artifactFile = scope.sessionFile?.trim();
   const concreteStorePath = resolveConcreteSessionStorePath(scope.storePath);
-  const hasCompleteTarget = Boolean(
-    scope.agentId?.trim() && scope.sessionKey?.trim() && concreteStorePath,
-  );
+  const targetAgentId = scope.agentId?.trim() || resolveAgentIdFromSessionKey(scope.sessionKey);
+  const hasCompleteTarget = Boolean(targetAgentId && scope.sessionKey?.trim() && concreteStorePath);
   if (
     !hasCompleteTarget &&
     artifactFile &&

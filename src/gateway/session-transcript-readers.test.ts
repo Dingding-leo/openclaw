@@ -254,7 +254,6 @@ describe("session transcript reader facade", () => {
 
     await expect(
       readLatestSessionUsageFromTranscriptAsync({
-        agentId: "main",
         sessionId,
         sessionKey,
         sessionFile: sessionKey,
