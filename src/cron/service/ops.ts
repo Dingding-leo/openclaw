@@ -1,5 +1,11 @@
 /** Stable public facade for cron service operations. */
-export { pauseScheduling, resumeScheduling, start, stop } from "./ops-lifecycle.js";
+export {
+  beginLegacyDefaultAgentOwnerHandoff,
+  pauseScheduling,
+  resumeScheduling,
+  start,
+  stop,
+} from "./ops-lifecycle.js";
 export {
   list,
   listPage,
