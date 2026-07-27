@@ -332,19 +332,21 @@ describeControlUiE2e("Control UI session dashboard stitch", () => {
     const researchTab = page.locator('[data-board-tab-id="research"]');
     await expect.poll(() => researchTab.getAttribute("active")).not.toBeNull();
 
-    const divider = page.locator(".board-session-surface__divider");
-    const dock = page.locator(".board-session-surface__chat");
+    const divider = page.locator(".sidebar-region__right-runtime .sidebar-column__divider");
+    const dock = page.locator(
+      '.sidebar-region__right-runtime .sidebar-column[data-column-id="chat-column"]',
+    );
     await divider.focus();
     await page.keyboard.press("End");
-    await expect.poll(() => dock.getAttribute("style")).not.toBe("width: 420px");
-    const persistedStyle = await dock.getAttribute("style");
-    expect(persistedStyle).toMatch(/^width: \d+(?:\.\d+)?px$/u);
+    await expect
+      .poll(() => dock.evaluate((element) => getComputedStyle(element).width))
+      .toBe("260px");
+    const persistedWidth = await dock.evaluate((element) => getComputedStyle(element).width);
+    expect(persistedWidth).toMatch(/^\d+(?:\.\d+)?px$/u);
 
     await page.reload();
-    await page.locator(".board-session-surface__chat").waitFor();
-    expect(await page.locator(".board-session-surface__chat").getAttribute("style")).toBe(
-      persistedStyle,
-    );
+    await dock.waitFor();
+    expect(await dock.evaluate((element) => getComputedStyle(element).width)).toBe(persistedWidth);
     await expect
       .poll(() =>
         page.locator('.chat-tool-card__preview[data-kind="canvas"] [data-pin-widget]').isDisabled(),
