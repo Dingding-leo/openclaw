@@ -22204,9 +22204,49 @@
       "translated": "उन्नत…"
     },
     {
-      "id": "native.apple.22947c17e44f76af",
-      "source": "Hide Advanced",
-      "translated": "उन्नत छिपाएँ"
+      "id": "native.apple.2e11404d7539301e",
+      "source": "Remote connection",
+      "translated": "रिमोट कनेक्शन"
+    },
+    {
+      "id": "native.apple.f6332654911cb2e2",
+      "source": "Verify OpenClaw can reach this gateway.",
+      "translated": "सत्यापित करें कि OpenClaw इस Gateway तक पहुँच सकता है।"
+    },
+    {
+      "id": "native.apple.6e5d3a3c3022e8c8",
+      "source": "Check connection",
+      "translated": "कनेक्शन जाँचें"
+    },
+    {
+      "id": "native.apple.23254b5b9707c581",
+      "source": "Advanced options",
+      "translated": "उन्नत विकल्प"
+    },
+    {
+      "id": "native.apple.dfc5606a4813ecfc",
+      "source": "Hide advanced options",
+      "translated": "उन्नत विकल्प छिपाएँ"
+    },
+    {
+      "id": "native.apple.1907a86a6cc2165b",
+      "source": "Gateway token",
+      "translated": "Gateway token"
+    },
+    {
+      "id": "native.apple.14a6b8d735579fae",
+      "source": "Paste the token from your gateway",
+      "translated": "अपने Gateway से टोकन यहाँ पेस्ट करें"
+    },
+    {
+      "id": "native.apple.143603a153dd0100",
+      "source": "Only needed when the gateway requires token auth.",
+      "translated": "केवल तभी आवश्यक है जब Gateway को टोकन प्रमाणीकरण की आवश्यकता हो।"
+    },
+    {
+      "id": "native.apple.2a50c3ee94dde35d",
+      "source": "The current gateway.remote.token value is not plain text. OpenClaw for macOS cannot use it directly; enter a plaintext token here to replace it.",
+      "translated": "वर्तमान gateway.remote.token मान प्लेन टेक्स्ट नहीं है। macOS के लिए OpenClaw इसे सीधे उपयोग नहीं कर सकता; इसे बदलने के लिए यहाँ एक प्लेनटेक्स्ट टोकन दर्ज करें।"
     },
     {
       "id": "native.apple.7881cec64b177026",
@@ -22277,41 +22317,6 @@
       "id": "native.apple.ab88df30f426b434",
       "source": "Tip: keep Tailscale enabled so your gateway stays reachable.",
       "translated": "सुझाव: Tailscale सक्षम रखें ताकि आपका gateway पहुँच योग्य बना रहे."
-    },
-    {
-      "id": "native.apple.2e11404d7539301e",
-      "source": "Remote connection",
-      "translated": "रिमोट कनेक्शन"
-    },
-    {
-      "id": "native.apple.bee162bb681696a3",
-      "source": "Checks the real remote websocket and auth handshake.",
-      "translated": "वास्तविक रिमोट websocket और auth handshake की जाँच करता है."
-    },
-    {
-      "id": "native.apple.6e5d3a3c3022e8c8",
-      "source": "Check connection",
-      "translated": "कनेक्शन जाँचें"
-    },
-    {
-      "id": "native.apple.1907a86a6cc2165b",
-      "source": "Gateway token",
-      "translated": "Gateway token"
-    },
-    {
-      "id": "native.apple.014d9fcbd97f6c48",
-      "source": "remote gateway auth token (gateway.remote.token)",
-      "translated": "remote gateway auth token (gateway.remote.token)"
-    },
-    {
-      "id": "native.apple.cc14b91d20cc33ba",
-      "source": "Used when the remote gateway requires token auth.",
-      "translated": "जब रिमोट Gateway को टोकन प्रमाणीकरण की आवश्यकता हो, तब उपयोग किया जाता है।"
-    },
-    {
-      "id": "native.apple.2a50c3ee94dde35d",
-      "source": "The current gateway.remote.token value is not plain text. OpenClaw for macOS cannot use it directly; enter a plaintext token here to replace it.",
-      "translated": "वर्तमान gateway.remote.token मान प्लेन टेक्स्ट नहीं है। macOS के लिए OpenClaw इसे सीधे उपयोग नहीं कर सकता; इसे बदलने के लिए यहाँ एक प्लेनटेक्स्ट टोकन दर्ज करें।"
     },
     {
       "id": "native.apple.ef011af3c0e22127",
