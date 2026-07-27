@@ -3750,6 +3750,11 @@ export const zh_CN: TranslationMap = {
     },
     outputTokens: "{count} 个输出令牌",
     archivedSessionDisabled: "恢复此会话以发送消息。",
+    sessionRoute: {
+      chooseTitle: "选择会话",
+      multipleMatches: "有多个会话与 {shortId} 匹配。",
+      additionalMatches: "仍有其他搜索结果。请使用更长的 ID 前缀。",
+    },
     sessionSharing: {
       menu: "会话共享",
       current: "会话可见性：{visibility}",

@@ -3871,6 +3871,12 @@ export const uk: TranslationMap = {
     },
     outputTokens: "{count} вихідних токенів",
     archivedSessionDisabled: "Відновіть цей сеанс, щоб надсилати повідомлення.",
+    sessionRoute: {
+      chooseTitle: "Виберіть сеанс",
+      multipleMatches: "Ідентифікатору {shortId} відповідає кілька сеансів.",
+      additionalMatches:
+        "Залишилися результати пошуку. Використайте довший префікс ідентифікатора.",
+    },
     sessionSharing: {
       menu: "Спільний доступ до потоку",
       current: "Видимість потоку: {visibility}",

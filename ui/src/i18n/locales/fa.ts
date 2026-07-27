@@ -3851,6 +3851,12 @@ export const fa: TranslationMap = {
     },
     outputTokens: "{count} توکن خروجی",
     archivedSessionDisabled: "برای ارسال پیام، این نشست را بازیابی کنید.",
+    sessionRoute: {
+      chooseTitle: "یک نشست را انتخاب کنید",
+      multipleMatches: "بیش از یک نشست با {shortId} مطابقت دارد.",
+      additionalMatches:
+        "هنوز چند نتیجهٔ جست‌وجو باقی مانده است. از پیشوند طولانی‌تری برای شناسه استفاده کنید.",
+    },
     sessionSharing: {
       menu: "اشتراک‌گذاری گفتگو",
       current: "دیده‌شدن گفتگو: {visibility}",

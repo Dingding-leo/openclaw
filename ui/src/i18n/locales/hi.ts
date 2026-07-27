@@ -3810,6 +3810,11 @@ export const hi: TranslationMap = {
     },
     outputTokens: "{count} आउटपुट टोकन",
     archivedSessionDisabled: "संदेश भेजने के लिए इस सत्र को बहाल करें।",
+    sessionRoute: {
+      chooseTitle: "एक सत्र चुनें",
+      multipleMatches: "{shortId} से एक से अधिक सत्र मेल खाते हैं।",
+      additionalMatches: "खोज परिणाम अभी भी शेष हैं। आईडी का लंबा उपसर्ग इस्तेमाल करें।",
+    },
     sessionSharing: {
       menu: "थ्रेड साझाकरण",
       current: "थ्रेड दृश्यता: {visibility}",

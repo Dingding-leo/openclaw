@@ -3878,6 +3878,11 @@ export const tr: TranslationMap = {
     },
     outputTokens: "{count} çıktı belirteci",
     archivedSessionDisabled: "Mesaj göndermek için bu oturumu geri yükleyin.",
+    sessionRoute: {
+      chooseTitle: "Bir oturum seçin",
+      multipleMatches: "Birden fazla oturum {shortId} ile eşleşiyor.",
+      additionalMatches: "Arama sonuçları hâlâ mevcut. Daha uzun bir kimlik öneki kullanın.",
+    },
     sessionSharing: {
       menu: "Konu paylaşımı",
       current: "Konu görünürlüğü: {visibility}",

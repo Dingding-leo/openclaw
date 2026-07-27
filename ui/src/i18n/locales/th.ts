@@ -3780,6 +3780,11 @@ export const th: TranslationMap = {
     },
     outputTokens: "{count} โทเค็นเอาต์พุต",
     archivedSessionDisabled: "กู้คืนเซสชันนี้เพื่อส่งข้อความ",
+    sessionRoute: {
+      chooseTitle: "เลือกเซสชัน",
+      multipleMatches: "มีเซสชันมากกว่าหนึ่งรายการที่ตรงกับ {shortId}",
+      additionalMatches: "ยังมีผลการค้นหาอื่นอีก โปรดใช้คำนำหน้า ID ที่ยาวขึ้น",
+    },
     sessionSharing: {
       menu: "การแชร์เธรด",
       current: "การมองเห็นเธรด: {visibility}",

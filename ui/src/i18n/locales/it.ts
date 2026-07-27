@@ -3903,6 +3903,11 @@ export const it: TranslationMap = {
     },
     outputTokens: "{count} token di output",
     archivedSessionDisabled: "Ripristina questa sessione per inviare messaggi.",
+    sessionRoute: {
+      chooseTitle: "Scegli una sessione",
+      multipleMatches: "Più di una sessione corrisponde a {shortId}.",
+      additionalMatches: "Sono presenti altri risultati di ricerca. Usa un prefisso ID più lungo.",
+    },
     sessionSharing: {
       menu: "Condivisione thread",
       current: "Visibilità thread: {visibility}",

@@ -3759,6 +3759,11 @@ export const zh_TW: TranslationMap = {
     },
     outputTokens: "{count} 個輸出 token",
     archivedSessionDisabled: "還原此工作階段以傳送訊息。",
+    sessionRoute: {
+      chooseTitle: "選擇工作階段",
+      multipleMatches: "有多個工作階段符合 {shortId}。",
+      additionalMatches: "仍有其他搜尋結果。請使用較長的 ID 前綴。",
+    },
     sessionSharing: {
       menu: "討論串分享",
       current: "討論串可見性：{visibility}",

@@ -3879,6 +3879,11 @@ export const pt_BR: TranslationMap = {
     },
     outputTokens: "{count} tokens de saída",
     archivedSessionDisabled: "Restaure esta sessão para enviar mensagens.",
+    sessionRoute: {
+      chooseTitle: "Escolha uma sessão",
+      multipleMatches: "Mais de uma sessão corresponde a {shortId}.",
+      additionalMatches: "Ainda há resultados de busca. Use um prefixo de ID mais longo.",
+    },
     sessionSharing: {
       menu: "Compartilhamento de thread",
       current: "Visibilidade do thread: {visibility}",

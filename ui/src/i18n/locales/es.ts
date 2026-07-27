@@ -3904,6 +3904,11 @@ export const es: TranslationMap = {
     },
     outputTokens: "{count} tokens de salida",
     archivedSessionDisabled: "Restaura esta sesión para enviar mensajes.",
+    sessionRoute: {
+      chooseTitle: "Elige una sesión",
+      multipleMatches: "Más de una sesión coincide con {shortId}.",
+      additionalMatches: "Quedan resultados de búsqueda. Usa un prefijo de id más largo.",
+    },
     sessionSharing: {
       menu: "Compartir hilo",
       current: "Visibilidad del hilo: {visibility}",

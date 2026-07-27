@@ -3891,6 +3891,11 @@ export const pl: TranslationMap = {
     },
     outputTokens: "{count} tokenów wyjściowych",
     archivedSessionDisabled: "Przywróć tę sesję, aby wysyłać wiadomości.",
+    sessionRoute: {
+      chooseTitle: "Wybierz sesję",
+      multipleMatches: "Więcej niż jedna sesja pasuje do {shortId}.",
+      additionalMatches: "Pozostały wyniki wyszukiwania. Użyj dłuższego prefiksu identyfikatora.",
+    },
     sessionSharing: {
       menu: "Udostępnianie wątku",
       current: "Widoczność wątku: {visibility}",

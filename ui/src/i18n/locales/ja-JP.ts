@@ -3878,6 +3878,12 @@ export const ja_JP: TranslationMap = {
     },
     outputTokens: "{count} 出力トークン",
     archivedSessionDisabled: "メッセージを送信するには、このセッションを復元してください。",
+    sessionRoute: {
+      chooseTitle: "セッションを選択",
+      multipleMatches: "{shortId} に一致するセッションが複数あります。",
+      additionalMatches:
+        "検索結果がまだ複数あります。より長い ID プレフィックスを使用してください。",
+    },
     sessionSharing: {
       menu: "スレッドの共有",
       current: "スレッドの表示範囲: {visibility}",

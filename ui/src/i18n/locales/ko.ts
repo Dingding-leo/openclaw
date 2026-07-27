@@ -3834,6 +3834,11 @@ export const ko: TranslationMap = {
     },
     outputTokens: "출력 토큰 {count}개",
     archivedSessionDisabled: "메시지를 보내려면 이 세션을 복원하세요.",
+    sessionRoute: {
+      chooseTitle: "세션 선택",
+      multipleMatches: "{shortId}와 일치하는 세션이 두 개 이상 있습니다.",
+      additionalMatches: "검색 결과가 여러 개 있습니다. 더 긴 ID 접두사를 사용하세요.",
+    },
     sessionSharing: {
       menu: "스레드 공유",
       current: "스레드 표시 범위: {visibility}",

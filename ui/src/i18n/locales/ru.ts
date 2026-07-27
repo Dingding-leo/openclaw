@@ -3891,6 +3891,12 @@ export const ru: TranslationMap = {
     },
     outputTokens: "{count} выходных токенов",
     archivedSessionDisabled: "Восстановите этот сеанс, чтобы отправлять сообщения.",
+    sessionRoute: {
+      chooseTitle: "Выберите сеанс",
+      multipleMatches: "Идентификатору {shortId} соответствует несколько сеансов.",
+      additionalMatches:
+        "Остались результаты поиска. Используйте более длинный префикс идентификатора.",
+    },
     sessionSharing: {
       menu: "Совместный доступ к потоку",
       current: "Видимость потока: {visibility}",

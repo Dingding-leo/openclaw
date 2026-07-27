@@ -3858,6 +3858,12 @@ export const id: TranslationMap = {
     },
     outputTokens: "{count} token output",
     archivedSessionDisabled: "Pulihkan sesi ini untuk mengirim pesan.",
+    sessionRoute: {
+      chooseTitle: "Pilih sesi",
+      multipleMatches: "Lebih dari satu sesi cocok dengan {shortId}.",
+      additionalMatches:
+        "Masih ada beberapa hasil pencarian. Gunakan prefiks id yang lebih panjang.",
+    },
     sessionSharing: {
       menu: "Berbagi thread",
       current: "Visibilitas thread: {visibility}",

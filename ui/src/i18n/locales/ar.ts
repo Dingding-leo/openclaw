@@ -3814,6 +3814,11 @@ export const ar: TranslationMap = {
     },
     outputTokens: "{count} رمز إخراج",
     archivedSessionDisabled: "استعِد هذه الجلسة لإرسال الرسائل.",
+    sessionRoute: {
+      chooseTitle: "اختر جلسة",
+      multipleMatches: "توجد أكثر من جلسة تطابق {shortId}.",
+      additionalMatches: "لا تزال هناك نتائج بحث. استخدم بادئة معرّف أطول.",
+    },
     sessionSharing: {
       menu: "مشاركة المسار",
       current: "رؤية المسار: {visibility}",

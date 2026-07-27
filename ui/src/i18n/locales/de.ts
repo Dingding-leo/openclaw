@@ -3910,6 +3910,12 @@ export const de: TranslationMap = {
     },
     outputTokens: "{count} Ausgabe-Tokens",
     archivedSessionDisabled: "Stellen Sie diese Sitzung wieder her, um Nachrichten zu senden.",
+    sessionRoute: {
+      chooseTitle: "Sitzung auswählen",
+      multipleMatches: "Mehr als eine Sitzung stimmt mit {shortId} überein.",
+      additionalMatches:
+        "Es sind noch Suchergebnisse vorhanden. Verwenden Sie ein längeres ID-Präfix.",
+    },
     sessionSharing: {
       menu: "Thread-Freigabe",
       current: "Thread-Sichtbarkeit: {visibility}",

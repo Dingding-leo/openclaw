@@ -3857,6 +3857,11 @@ export const vi: TranslationMap = {
     },
     outputTokens: "{count} token đầu ra",
     archivedSessionDisabled: "Khôi phục phiên này để gửi tin nhắn.",
+    sessionRoute: {
+      chooseTitle: "Chọn một phiên",
+      multipleMatches: "Có nhiều phiên khớp với {shortId}.",
+      additionalMatches: "Vẫn còn kết quả tìm kiếm. Hãy sử dụng tiền tố id dài hơn.",
+    },
     sessionSharing: {
       menu: "Chia sẻ luồng",
       current: "Hiển thị luồng: {visibility}",

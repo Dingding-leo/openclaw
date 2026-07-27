@@ -3940,6 +3940,12 @@ export const fr: TranslationMap = {
     },
     outputTokens: "{count} jetons de sortie",
     archivedSessionDisabled: "Restaurez cette session pour envoyer des messages.",
+    sessionRoute: {
+      chooseTitle: "Choisir une session",
+      multipleMatches: "Plusieurs sessions correspondent à {shortId}.",
+      additionalMatches:
+        "Il reste des résultats de recherche. Utilisez un préfixe d’identifiant plus long.",
+    },
     sessionSharing: {
       menu: "Partage de conversation",
       current: "Visibilité de la conversation : {visibility}",

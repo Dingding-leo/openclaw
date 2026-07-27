@@ -3880,6 +3880,11 @@ export const nl: TranslationMap = {
     },
     outputTokens: "{count} uitvoertokens",
     archivedSessionDisabled: "Herstel deze sessie om berichten te verzenden.",
+    sessionRoute: {
+      chooseTitle: "Kies een sessie",
+      multipleMatches: "Meer dan één sessie komt overeen met {shortId}.",
+      additionalMatches: "Er zijn nog meerdere zoekresultaten. Gebruik een langer id-voorvoegsel.",
+    },
     sessionSharing: {
       menu: "Thread delen",
       current: "Zichtbaarheid van thread: {visibility}",
