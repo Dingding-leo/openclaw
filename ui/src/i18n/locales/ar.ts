@@ -982,6 +982,8 @@ export const ar: TranslationMap = {
       notCreatedYet: "لم يتم إنشاؤه بعد",
       updatedUnknown: "تحديث غير معروف",
       missingHint: "هذا الملف مفقود. سيؤدي الحفظ إلى إنشائه في مساحة عمل الوكيل.",
+      addFile: "إضافة ملف…",
+      createHint: "هذا الملف غير موجود بعد. سيؤدي الحفظ إلى إنشائه في مساحة عمل الوكيل.",
       content: "المحتوى",
       words: "{count} كلمة",
       lines: "أسطر",

@@ -995,6 +995,9 @@ export const vi: TranslationMap = {
       notCreatedYet: "Chưa được tạo",
       updatedUnknown: "Cập nhật không xác định",
       missingHint: "Tệp này bị thiếu. Khi lưu, tệp sẽ được tạo trong workspace của agent.",
+      addFile: "Thêm tệp…",
+      createHint:
+        "Tệp này chưa tồn tại. Khi lưu, tệp sẽ được tạo trong không gian làm việc của tác nhân.",
       content: "Nội dung",
       words: "{count} từ",
       lines: "dòng",

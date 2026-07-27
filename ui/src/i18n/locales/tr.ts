@@ -995,6 +995,9 @@ export const tr: TranslationMap = {
       notCreatedYet: "Not Created Yet",
       updatedUnknown: "Updated Unknown",
       missingHint: "This file is missing. Saving will create it in the agent workspace.",
+      addFile: "Dosya ekle…",
+      createHint:
+        "Bu dosya henüz mevcut değil. Kaydettiğinizde agent çalışma alanında oluşturulacaktır.",
       content: "Content",
       words: "{count} words",
       lines: "lines",

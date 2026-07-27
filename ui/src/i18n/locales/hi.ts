@@ -984,6 +984,8 @@ export const hi: TranslationMap = {
       notCreatedYet: "अभी तक बनाया नहीं गया",
       updatedUnknown: "अपडेट अज्ञात",
       missingHint: "यह फ़ाइल गुम है। सेव करने पर यह एजेंट वर्कस्पेस में बन जाएगी।",
+      addFile: "फ़ाइल जोड़ें…",
+      createHint: "यह फ़ाइल अभी मौजूद नहीं है। सहेजने पर यह एजेंट कार्यस्थान में बन जाएगी।",
       content: "सामग्री",
       words: "{count} शब्द",
       lines: "पंक्तियाँ",

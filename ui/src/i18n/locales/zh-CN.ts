@@ -961,6 +961,8 @@ export const zh_CN: TranslationMap = {
       notCreatedYet: "尚未创建",
       updatedUnknown: "更新时间未知",
       missingHint: "此文件缺失。保存后将在代理工作区中创建它。",
+      addFile: "添加文件…",
+      createHint: "此文件尚不存在。保存后将在智能体工作区中创建该文件。",
       content: "内容",
       words: "{count} 个词",
       lines: "行",

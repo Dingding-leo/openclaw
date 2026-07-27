@@ -990,6 +990,9 @@ export const id: TranslationMap = {
       notCreatedYet: "Not Created Yet",
       updatedUnknown: "Updated Unknown",
       missingHint: "This file is missing. Saving will create it in the agent workspace.",
+      addFile: "Tambahkan file…",
+      createHint:
+        "File ini belum ada. Menyimpannya akan membuat file tersebut di ruang kerja agen.",
       content: "Content",
       words: "{count} words",
       lines: "lines",

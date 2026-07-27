@@ -990,6 +990,8 @@ export const fa: TranslationMap = {
       notCreatedYet: "هنوز ایجاد نشده است",
       updatedUnknown: "زمان به‌روزرسانی نامشخص است",
       missingHint: "این فایل موجود نیست. ذخیره‌سازی آن را در فضای کاری عامل ایجاد می‌کند.",
+      addFile: "افزودن فایل…",
+      createHint: "این فایل هنوز وجود ندارد. با ذخیره‌کردن، در فضای کاری عامل ایجاد می‌شود.",
       content: "محتوا",
       words: "{count} کلمه",
       lines: "خط",

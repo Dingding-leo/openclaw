@@ -973,6 +973,8 @@ export const th: TranslationMap = {
       notCreatedYet: "Not Created Yet",
       updatedUnknown: "Updated Unknown",
       missingHint: "This file is missing. Saving will create it in the agent workspace.",
+      addFile: "เพิ่มไฟล์…",
+      createHint: "ไฟล์นี้ยังไม่มีอยู่ การบันทึกจะสร้างไฟล์นี้ในพื้นที่ทำงานของเอเจนต์",
       content: "Content",
       words: "{count} words",
       lines: "lines",

@@ -1007,6 +1007,9 @@ export const it: TranslationMap = {
       updatedUnknown: "Aggiornamento sconosciuto",
       missingHint:
         "Questo file è mancante. Il salvataggio lo creerà nello spazio di lavoro dell'agente.",
+      addFile: "Aggiungi file…",
+      createHint:
+        "Questo file non esiste ancora. Il salvataggio lo creerà nell'area di lavoro dell'agente.",
       content: "Contenuto",
       words: "{count} parole",
       lines: "righe",

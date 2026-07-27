@@ -1001,6 +1001,9 @@ export const nl: TranslationMap = {
       notCreatedYet: "Nog niet aangemaakt",
       updatedUnknown: "Bijgewerkt onbekend",
       missingHint: "Dit bestand ontbreekt. Opslaan maakt het aan in de agent-workspace.",
+      addFile: "Bestand toevoegen…",
+      createHint:
+        "Dit bestand bestaat nog niet. Als u het opslaat, wordt het aangemaakt in de werkruimte van de agent.",
       content: "Inhoud",
       words: "{count} woorden",
       lines: "regels",

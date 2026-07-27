@@ -965,6 +965,8 @@ export const zh_TW: TranslationMap = {
       notCreatedYet: "Not Created Yet",
       updatedUnknown: "Updated Unknown",
       missingHint: "This file is missing. Saving will create it in the agent workspace.",
+      addFile: "新增檔案…",
+      createHint: "此檔案尚不存在。儲存後將在代理程式工作區中建立此檔案。",
       content: "Content",
       words: "{count} words",
       lines: "lines",

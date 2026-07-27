@@ -999,6 +999,9 @@ export const uk: TranslationMap = {
       notCreatedYet: "Not Created Yet",
       updatedUnknown: "Updated Unknown",
       missingHint: "This file is missing. Saving will create it in the agent workspace.",
+      addFile: "Додати файл…",
+      createHint:
+        "Цього файлу ще не існує. Після збереження його буде створено в робочому просторі агента.",
       content: "Content",
       words: "{count} words",
       lines: "lines",

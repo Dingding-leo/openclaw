@@ -987,6 +987,8 @@ export const ko: TranslationMap = {
       notCreatedYet: "Not Created Yet",
       updatedUnknown: "Updated Unknown",
       missingHint: "This file is missing. Saving will create it in the agent workspace.",
+      addFile: "파일 추가…",
+      createHint: "이 파일은 아직 존재하지 않습니다. 저장하면 에이전트 작업 공간에 생성됩니다.",
       content: "Content",
       words: "{count} words",
       lines: "lines",

@@ -1002,6 +1002,9 @@ export const ja_JP: TranslationMap = {
       notCreatedYet: "Not Created Yet",
       updatedUnknown: "Updated Unknown",
       missingHint: "This file is missing. Saving will create it in the agent workspace.",
+      addFile: "ファイルを追加…",
+      createHint:
+        "このファイルはまだ存在しません。保存すると、エージェントのワークスペースに作成されます。",
       content: "Content",
       words: "{count} words",
       lines: "lines",

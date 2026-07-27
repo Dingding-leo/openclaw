@@ -1001,6 +1001,9 @@ export const pl: TranslationMap = {
       notCreatedYet: "Not Created Yet",
       updatedUnknown: "Updated Unknown",
       missingHint: "This file is missing. Saving will create it in the agent workspace.",
+      addFile: "Dodaj plik…",
+      createHint:
+        "Ten plik jeszcze nie istnieje. Zapisanie go spowoduje utworzenie go w przestrzeni roboczej agenta.",
       content: "Content",
       words: "{count} words",
       lines: "lines",
