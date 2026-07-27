@@ -1095,7 +1095,7 @@ describe("exec approvals store helpers", () => {
     expect(readApprovalsFile(dir).socket).toEqual(resolved.file.socket);
   });
 
-  it("atomically replaces existing approvals files instead of mutating linked inodes", () => {
+  it("rejects existing hardlinked approvals files without mutating either link", () => {
     const dir = createHomeDir();
     const approvalsPath = approvalsFilePath(dir);
     const linkedPath = path.join(dir, "linked.json");
@@ -1103,11 +1103,13 @@ describe("exec approvals store helpers", () => {
     fs.writeFileSync(linkedPath, '{"sentinel":true}\n', "utf8");
     fs.linkSync(linkedPath, approvalsPath);
 
-    saveExecApprovals({ version: 1, defaults: { security: "full" }, agents: {} });
+    expect(() =>
+      saveExecApprovals({ version: 1, defaults: { security: "full" }, agents: {} }),
+    ).toThrow(expect.objectContaining({ code: "hardlink" }));
 
-    expect(fs.readFileSync(approvalsPath, "utf8")).toContain('"security": "full"');
+    expect(fs.readFileSync(approvalsPath, "utf8")).toBe('{"sentinel":true}\n');
     expect(fs.readFileSync(linkedPath, "utf8")).toBe('{"sentinel":true}\n');
-    expect(fs.statSync(approvalsPath).ino).not.toBe(fs.statSync(linkedPath).ino);
+    expect(fs.statSync(approvalsPath).ino).toBe(fs.statSync(linkedPath).ino);
   });
 
   it("normalizes successful rename writes to owner-only permissions", () => {
@@ -1162,16 +1164,16 @@ describe("exec approvals store helpers", () => {
     },
   );
 
-  it("breaks a hard link when an otherwise unchanged file is ensured", async () => {
+  it("rejects a hard link when an otherwise unchanged file is ensured", async () => {
     const dir = createHomeDir();
     const approvalsPath = approvalsFilePath(dir);
     const linkedPath = path.join(dir, "linked-approvals.json");
     ensureExecApprovals();
     fs.linkSync(approvalsPath, linkedPath);
 
-    await ensureExecApprovalsSnapshot();
+    await expect(ensureExecApprovalsSnapshot()).rejects.toMatchObject({ code: "hardlink" });
 
-    expect(fs.statSync(approvalsPath).ino).not.toBe(fs.statSync(linkedPath).ino);
+    expect(fs.statSync(approvalsPath).ino).toBe(fs.statSync(linkedPath).ino);
     expect(JSON.parse(fs.readFileSync(approvalsPath, "utf8"))).toEqual(
       JSON.parse(fs.readFileSync(linkedPath, "utf8")),
     );
@@ -1312,9 +1314,20 @@ describe("exec approvals store helpers", () => {
       return actualFtruncateSync(fd, len);
     });
 
-    expect(() =>
-      saveExecApprovals({ version: 1, defaults: { security: "full" }, agents: {} }),
-    ).toThrow(/copy failed after opening destination/);
+    let failure: unknown;
+    try {
+      saveExecApprovals({ version: 1, defaults: { security: "full" }, agents: {} });
+    } catch (err) {
+      failure = err;
+    }
+    expect(failure).toMatchObject({
+      code: "helper-failed",
+      details: { cleanup: "restored" },
+    });
+    expect(failure).toHaveProperty(
+      "message",
+      expect.stringContaining("copy failed after opening destination"),
+    );
     expect(fs.readFileSync(approvalsPath, "utf8")).toBe(previousRaw);
     expect(fs.statSync(approvalsPath).mode & 0o777).toBe(0o600);
     expect(listExecApprovalTempFiles(dir)).toStrictEqual([]);
@@ -1335,21 +1348,20 @@ describe("exec approvals store helpers", () => {
       }
       return actualRenameSync(from, to);
     });
-    const actualStatSync = fs.statSync.bind(fs);
+    const actualOpenSync = fs.openSync.bind(fs);
     let swappedDestination = false;
-    vi.spyOn(fs, "statSync").mockImplementation((file, options) => {
-      const result = actualStatSync(file, options as never);
+    vi.spyOn(fs, "openSync").mockImplementation((file, flags, mode) => {
       if (!swappedDestination && String(file) === approvalsPath) {
         swappedDestination = true;
         fs.rmSync(approvalsPath);
         fs.symlinkSync(targetPath, approvalsPath);
       }
-      return result;
+      return actualOpenSync(file, flags, mode);
     });
 
     expect(() =>
       saveExecApprovals({ version: 1, defaults: { security: "full" }, agents: {} }),
-    ).toThrow(/symlink|ELOOP/);
+    ).toThrow(/symlink|path changed|path-mismatch|ELOOP/);
     expect(fs.readFileSync(targetPath, "utf8")).toBe('{"sentinel":true}\n');
     expect(listExecApprovalTempFiles(dir)).toStrictEqual([]);
   });
@@ -1372,7 +1384,8 @@ describe("exec approvals store helpers", () => {
 
     expect(() =>
       saveExecApprovals({ version: 1, defaults: { security: "full" }, agents: {} }),
-    ).toThrow(/hard-linked exec approvals file/);
+    ).toThrow(expect.objectContaining({ code: "hardlink" }));
+    expect(fs.readFileSync(approvalsPath, "utf8")).toBe('{"sentinel":true}\n');
     expect(fs.readFileSync(linkedPath, "utf8")).toBe('{"sentinel":true}\n');
     expect(listExecApprovalTempFiles(dir)).toStrictEqual([]);
   });
