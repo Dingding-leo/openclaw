@@ -569,6 +569,7 @@ export function createFollowupRunner(params: {
     let replyOperation: ReplyOperation | undefined;
     let deferred = false;
     let failed = false;
+    let queuedFollowupAdmitted = false;
 
     try {
       queued.run.config = await resolveQueuedReplyExecutionConfig(queued.run.config, {
@@ -688,6 +689,7 @@ export function createFollowupRunner(params: {
       }
       // Channel delivery state belongs to one admitted run. Give the active
       // dispatcher a boundary before callbacks from this followup can reuse it.
+      queuedFollowupAdmitted = true;
       await opts?.onQueuedFollowupAdmitted?.();
       if (replyOperation.sessionId !== run.sessionId) {
         run = { ...run, sessionId: replyOperation.sessionId };
@@ -2027,6 +2029,15 @@ export function createFollowupRunner(params: {
       failed = true;
       throw err;
     } finally {
+      if (queuedFollowupAdmitted) {
+        try {
+          await opts?.onQueuedFollowupSettled?.();
+        } catch (err) {
+          logVerbose(
+            `followup queue: queued presentation cleanup failed: ${formatErrorMessage(err)}`,
+          );
+        }
+      }
       for (const end of endDeliveryCorrelations.toReversed()) {
         try {
           end();

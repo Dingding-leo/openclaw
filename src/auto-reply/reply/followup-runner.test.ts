@@ -3048,24 +3048,36 @@ describe("createFollowupRunner runtime config", () => {
 
   it("notifies the active dispatcher after queued followup admission", async () => {
     const events: string[] = [];
+    admitReplyTurnMock.mockResolvedValueOnce({
+      status: "admitted",
+      operation: createReplyOperationForTest({
+        sessionKey: "main",
+        sessionId: "session",
+        resetTriggered: false,
+      }),
+    });
     runEmbeddedAgentMock.mockImplementationOnce(async () => {
       events.push("run");
-      return { payloads: [], meta: {} };
+      return { payloads: [{ text: "done" }], meta: {} };
     });
     const runner = createFollowupRunner({
       typing: createMockTypingController(),
       typingMode: "instant",
       defaultModel: "openai/gpt-5.4",
       opts: {
+        onBlockReply: vi.fn(async () => {}),
         onQueuedFollowupAdmitted: () => {
           events.push("admitted");
+        },
+        onQueuedFollowupSettled: () => {
+          events.push("settled");
         },
       },
     });
 
     await runner(createQueuedRun());
 
-    expect(events).toEqual(["admitted", "run"]);
+    expect(events).toEqual(["admitted", "run", "settled"]);
   });
 
   it("resolves queued embedded followups before preflight helpers read config", async () => {
