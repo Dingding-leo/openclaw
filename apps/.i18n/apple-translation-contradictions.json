@@ -2606,6 +2606,7 @@
       "locale": "es",
       "source": "Done",
       "translations": [
+        "Completado",
         "Hecho",
         "Listo"
       ]
@@ -2622,8 +2623,17 @@
       "locale": "it",
       "source": "Done",
       "translations": [
+        "Completato",
         "Fatto",
         "Fine"
+      ]
+    },
+    {
+      "locale": "nl",
+      "source": "Done",
+      "translations": [
+        "Gereed",
+        "Klaar"
       ]
     },
     {
@@ -2632,6 +2642,30 @@
       "translations": [
         "Klar",
         "Klart"
+      ]
+    },
+    {
+      "locale": "tr",
+      "source": "Done",
+      "translations": [
+        "Bitti",
+        "Tamamlandı"
+      ]
+    },
+    {
+      "locale": "vi",
+      "source": "Done",
+      "translations": [
+        "Hoàn tất",
+        "Xong"
+      ]
+    },
+    {
+      "locale": "zh-CN",
+      "source": "Done",
+      "translations": [
+        "完成",
+        "已完成"
       ]
     },
     {
@@ -2993,6 +3027,46 @@
       "translations": [
         "匯出對話紀錄",
         "匯出逐字稿"
+      ]
+    },
+    {
+      "locale": "ar",
+      "source": "Failed",
+      "translations": [
+        "فشل",
+        "فشلت"
+      ]
+    },
+    {
+      "locale": "es",
+      "source": "Failed",
+      "translations": [
+        "Fallida",
+        "Falló"
+      ]
+    },
+    {
+      "locale": "ko",
+      "source": "Failed",
+      "translations": [
+        "실패",
+        "실패함"
+      ]
+    },
+    {
+      "locale": "ru",
+      "source": "Failed",
+      "translations": [
+        "Не выполнено",
+        "Не удалось"
+      ]
+    },
+    {
+      "locale": "uk",
+      "source": "Failed",
+      "translations": [
+        "Не виконано",
+        "Помилка"
       ]
     },
     {
@@ -7048,6 +7122,38 @@
       ]
     },
     {
+      "locale": "fr",
+      "source": "Queued",
+      "translations": [
+        "En attente",
+        "En file d'attente"
+      ]
+    },
+    {
+      "locale": "hi",
+      "source": "Queued",
+      "translations": [
+        "कतार में",
+        "कतारबद्ध"
+      ]
+    },
+    {
+      "locale": "id",
+      "source": "Queued",
+      "translations": [
+        "Antre",
+        "Dalam antrean"
+      ]
+    },
+    {
+      "locale": "ja-JP",
+      "source": "Queued",
+      "translations": [
+        "キュー待ち",
+        "待機中"
+      ]
+    },
+    {
       "locale": "it",
       "source": "Ready",
       "translations": [
@@ -8060,6 +8166,14 @@
       ]
     },
     {
+      "locale": "de",
+      "source": "Running",
+      "translations": [
+        "Läuft",
+        "Wird ausgeführt"
+      ]
+    },
+    {
       "locale": "fr",
       "source": "Running",
       "translations": [
@@ -8097,6 +8211,7 @@
       "locale": "pl",
       "source": "Running",
       "translations": [
+        "Działa",
         "Uruchomiona",
         "Uruchomione",
         "Uruchomiono",
