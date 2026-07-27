@@ -7,6 +7,7 @@ import type { AgentMessage } from "../../agents/runtime/index.js";
 import {
   acquireSessionWriteLock,
   resolveSessionWriteLockOptions,
+  withSessionWriteLockOwner,
 } from "../../agents/session-write-lock.js";
 import { redactTranscriptMessage } from "../../agents/transcript-redact.js";
 import type { OpenClawConfig } from "../../config/types.openclaw.js";
@@ -424,7 +425,10 @@ async function withSessionTranscriptAppendQueue<T>(
   const queueKey = await resolveTranscriptAppendQueueKey(transcriptPath);
   // Per-file queue is in-process only; the external session write lock still owns cross-process
   // ordering.
-  return await transcriptAppendQueue.enqueue(queueKey, fn);
+  return await transcriptAppendQueue.enqueue(queueKey, async () => {
+    const reentrantOwner = `session:${queueKey}:append:${randomUUID()}`;
+    return await withSessionWriteLockOwner(reentrantOwner, fn);
+  });
 }
 
 type AppendSessionTranscriptMessageParams<TMessage = unknown> = {
@@ -496,7 +500,6 @@ async function withSessionTranscriptWriteLock<T>(
   const lock = await acquireSessionWriteLock({
     sessionFile: params.transcriptPath,
     ...resolveSessionWriteLockOptions(params.config),
-    allowReentrant: true,
   });
   try {
     return await run();

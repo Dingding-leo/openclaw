@@ -4,6 +4,7 @@
  * Uses lock files with owner metadata, stale detection, signal cleanup, and watchdog checks to serialize writes.
  */
 import "../infra/fs-safe-defaults.js";
+import { AsyncLocalStorage } from "node:async_hooks";
 import type fsSync from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -57,6 +58,15 @@ const ABORTABLE_SESSION_WRITE_LOCK_POLL_MS = 100;
 const DEFAULT_WATCHDOG_INTERVAL_MS = 60_000;
 const DEFAULT_TIMEOUT_GRACE_MS = 2 * 60 * 1000;
 const REPORT_ONLY_STALE_LOCK_REASONS = new Set(["too-old", "hold-exceeded"]);
+const sessionWriteLockOwner = new AsyncLocalStorage<string>();
+
+/** Propagate one logical writer identity through intentional nested session-lock acquisition. */
+export async function withSessionWriteLockOwner<T>(
+  reentrantOwner: string,
+  run: () => Promise<T> | T,
+): Promise<T> {
+  return await sessionWriteLockOwner.run(reentrantOwner, run);
+}
 
 /**
  * Yield control to the event loop so other sessions can make progress
@@ -941,11 +951,12 @@ export async function acquireSessionWriteLock(params: {
   timeoutMs?: number;
   staleMs?: number;
   maxHoldMs?: number;
-  allowReentrant?: boolean;
+  reentrantOwner?: string;
   signal?: AbortSignal;
 }): Promise<{
   release: () => Promise<void>;
 }> {
+  const reentrantOwner = params.reentrantOwner ?? sessionWriteLockOwner.getStore();
   const throwIfAborted = () => {
     if (!params.signal?.aborted) {
       return;
@@ -959,7 +970,6 @@ export async function acquireSessionWriteLock(params: {
   };
   throwIfAborted();
   registerCleanupHandlers();
-  const allowReentrant = params.allowReentrant ?? false;
   const defaultOptions = resolveSessionWriteLockOptions();
   const timeoutMs = resolvePositiveMs(params.timeoutMs, defaultOptions.timeoutMs, {
     allowInfinity: true,
@@ -1002,7 +1012,7 @@ export async function acquireSessionWriteLock(params: {
         timeoutMs: acquireAttemptTimeoutMs,
         retry: { minTimeout: 50, maxTimeout: 1000, factor: 1 },
         staleRecovery: "remove-if-unchanged",
-        allowReentrant,
+        reentrantOwner,
         metadata: { maxHoldMs },
         payload: () => {
           const createdAt = new Date().toISOString();
