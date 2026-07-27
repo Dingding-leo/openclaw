@@ -3,6 +3,7 @@ export {
   beginLegacyDefaultAgentOwnerHandoff,
   pauseScheduling,
   refreshLegacyDefaultAgentOwnerHandoff,
+  reloadForConfigAdoption,
   resumeScheduling,
   start,
   stop,
