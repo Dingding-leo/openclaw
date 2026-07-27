@@ -14,8 +14,17 @@ const sessionRow = vi.hoisted(() => ({
   agentRuntime: { id: "openclaw", source: "model" },
 }));
 const isEmbeddedAgentRunInProgressMock = vi.hoisted(() => vi.fn());
+const loadAccessorSessionEntryReadOnlyMock = vi.hoisted(() => vi.fn());
+const readSessionMessageCountAsyncMock = vi.hoisted(() => vi.fn());
 
 vi.mock("../config/io.js", () => ({ getRuntimeConfig: () => ({}) }));
+vi.mock("../config/sessions/session-accessor.js", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("../config/sessions/session-accessor.js")>();
+  return {
+    ...actual,
+    loadSessionEntryReadOnly: loadAccessorSessionEntryReadOnlyMock,
+  };
+});
 vi.mock("./chat-display-projection.js", () => ({
   projectChatDisplayMessage: (message: unknown) => message,
 }));
@@ -23,8 +32,14 @@ vi.mock("./session-utils.js", () => ({
   attachOpenClawTranscriptMeta: (message: unknown) => message,
   loadGatewaySessionRow: () => sessionRow,
   loadSessionEntry: () => ({ entry: undefined, storePath: "" }),
-  readSessionMessageCountAsync: vi.fn(),
 }));
+vi.mock("./session-transcript-readers.js", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("./session-transcript-readers.js")>();
+  return {
+    ...actual,
+    readSessionMessageCountAsync: readSessionMessageCountAsyncMock,
+  };
+});
 vi.mock("../agents/embedded-agent-runner/runs.js", async () => {
   const actual = await vi.importActual<typeof import("../agents/embedded-agent-runner/runs.js")>(
     "../agents/embedded-agent-runner/runs.js",
@@ -80,6 +95,8 @@ describe("createTranscriptUpdateBroadcastHandler", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     isEmbeddedAgentRunInProgressMock.mockReturnValue(false);
+    loadAccessorSessionEntryReadOnlyMock.mockReturnValue(undefined);
+    readSessionMessageCountAsyncMock.mockResolvedValue(undefined);
     sessionRow.thinkingLevel = "ultra";
   });
 
@@ -166,6 +183,35 @@ describe("createTranscriptUpdateBroadcastHandler", () => {
     ).resolves.toMatchObject({
       senderIsOwner: true,
     });
+  });
+
+  it("resolves messageSeq through a partial target's explicit store", async () => {
+    loadAccessorSessionEntryReadOnlyMock.mockReturnValue({
+      sessionId: "sess-main",
+      updatedAt: 1,
+    });
+    readSessionMessageCountAsyncMock.mockResolvedValue(7);
+    const { broadcastToConnIds, handler } = createHandler(false);
+
+    handler({
+      agentId: "main",
+      message: { role: "assistant", content: [{ type: "text", text: "Final answer" }] },
+      messageId: "message-partial-target",
+      sessionKey: "agent:main:main",
+      target: {
+        agentId: "main",
+        sessionKey: "agent:main:main",
+        storePath: "/tmp/explicit-sessions.json",
+      },
+    });
+    await vi.waitFor(() => expect(broadcastToConnIds).toHaveBeenCalledTimes(1));
+
+    expect(loadAccessorSessionEntryReadOnlyMock).toHaveBeenCalledWith({
+      agentId: "main",
+      sessionKey: "agent:main:main",
+      storePath: "/tmp/explicit-sessions.json",
+    });
+    expect(broadcastToConnIds.mock.calls[0]?.[1]).toMatchObject({ messageSeq: 7 });
   });
 });
 
