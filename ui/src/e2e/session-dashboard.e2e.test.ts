@@ -336,17 +336,22 @@ describeControlUiE2e("Control UI session dashboard stitch", () => {
     const dock = page.locator(
       '.sidebar-region__right-runtime .sidebar-column[data-column-id="chat-column"]',
     );
+    const dockWidth = () => dock.evaluate((element) => getComputedStyle(element).width);
     await divider.focus();
     await page.keyboard.press("End");
-    await expect
-      .poll(() => dock.evaluate((element) => getComputedStyle(element).width))
-      .toBe("260px");
-    const persistedWidth = await dock.evaluate((element) => getComputedStyle(element).width);
+    const clampedWidth = await dockWidth();
+    // End pins the column against its clamp, so step back off it: comparing a
+    // clamped width to itself after reload would pass even if the persisted
+    // width were dropped and the column fell back to its minimum.
+    await page.keyboard.press("ArrowLeft");
+    await page.keyboard.press("ArrowLeft");
+    await expect.poll(dockWidth).not.toBe(clampedWidth);
+    const persistedWidth = await dockWidth();
     expect(persistedWidth).toMatch(/^\d+(?:\.\d+)?px$/u);
 
     await page.reload();
     await dock.waitFor();
-    expect(await dock.evaluate((element) => getComputedStyle(element).width)).toBe(persistedWidth);
+    expect(await dockWidth()).toBe(persistedWidth);
     await expect
       .poll(() =>
         page.locator('.chat-tool-card__preview[data-kind="canvas"] [data-pin-widget]').isDisabled(),
