@@ -130,6 +130,7 @@ export async function updateSessionStoreAfterAgentRun(params: {
         }),
   };
   if (entry.sessionId !== sessionId) {
+    delete (next as { sessionFile?: unknown }).sessionFile;
     next.usageFamilyKey = entry.usageFamilyKey ?? sessionKey;
     next.usageFamilySessionIds = Array.from(
       new Set([...(entry.usageFamilySessionIds ?? []), entry.sessionId, sessionId]),
@@ -489,6 +490,7 @@ export async function recordCliCompactionInStore(params: {
   const newSessionId = normalizeOptionalString(params.newSessionId);
   const sessionIdChanged = Boolean(newSessionId && newSessionId !== entry.sessionId);
   if (sessionIdChanged && newSessionId) {
+    delete (next as { sessionFile?: unknown }).sessionFile;
     next.sessionId = newSessionId;
     next.usageFamilyKey = entry.usageFamilyKey ?? sessionKey;
     next.usageFamilySessionIds = Array.from(
