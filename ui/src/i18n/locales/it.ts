@@ -41,6 +41,7 @@ export const it: TranslationMap = {
     unselect: "Deseleziona",
     enabled: "Abilitato",
     disabled: "Disabilitato",
+    failed: "Non riusciti",
     none: "nessuno",
     na: "n/d",
     never: "mai",
@@ -613,6 +614,11 @@ export const it: TranslationMap = {
     createOutcomeUnknown:
       "Il Gateway è cambiato durante l’avvio di questa sessione. Controlla le sessioni recenti prima di avviare nuovamente questa attività.",
     catalogUnavailable: "La destinazione di questa sessione non è disponibile.",
+  },
+  dashboardsPage: {
+    emptyTitle: "Nessuna dashboard",
+    emptyDescription: "Apri un thread e passa alla vista Dashboard per aggiungerlo qui.",
+    loadError: "Impossibile caricare le dashboard: {error}",
   },
   sessionsView: {
     deletePreservedWorktrees:
@@ -1858,6 +1864,7 @@ export const it: TranslationMap = {
     skillWorkshop: "Workshop delle Skill",
     nodes: "Nodi",
     chat: "Chat",
+    dashboards: "Dashboard",
     custodian: "OpenClaw",
     config: "Config",
     profile: "Profilo",
@@ -1865,6 +1872,7 @@ export const it: TranslationMap = {
     appearance: "Aspetto",
     automation: "Automazione",
     mcp: "MCP",
+    memory: "Memoria",
     infrastructure: "Infrastruttura",
     labs: "Labs",
     about: "Informazioni",
@@ -1894,6 +1902,7 @@ export const it: TranslationMap = {
     skillWorkshop: "Esamina, perfeziona e applica le proposte prima che diventino skill attive.",
     nodes: "Dispositivi associati e comandi.",
     chat: "Chat Gateway per interventi rapidi.",
+    dashboards: "Thread che si aprono nella vista Dashboard.",
     custodian: "Configurazione e manutenzione del sistema.",
     config: "Modifica openclaw.json.",
     profile: "Le statistiche, le serie e la vita nella barriera corallina del tuo agente.",
@@ -1901,6 +1910,7 @@ export const it: TranslationMap = {
     appearance: "Tema, UI e impostazioni della procedura guidata di configurazione.",
     automation: "Comandi, hook, cron e plugin.",
     mcp: "Server MCP, autenticazione, strumenti e diagnostica.",
+    memory: "Motore della memoria, backend, ricerca e sogni.",
     infrastructure: "Impostazioni Gateway, web, browser e media.",
     labs: "Funzionalità sperimentali di agenti e strumenti.",
     about: "Control UI e il Gateway connesso creano l'identità.",
@@ -2174,6 +2184,165 @@ export const it: TranslationMap = {
     tlsVerifyOff: "verifica TLS disattivata",
     mtls: "mTLS",
   },
+  memoryPage: {
+    tablistLabel: "Sezioni della memoria",
+    tabs: {
+      overview: "Panoramica",
+      search: "Cerca",
+      dreaming: "Sogni",
+    },
+    engine: {
+      title: "Motore",
+      description:
+        "Un solo plugin di memoria occupa lo slot di memoria. La selezione di un motore lo abilita e disabilita gli altri.",
+      rowTitle: "Motore della memoria",
+      off: "Disattivato",
+      autoHint:
+        "Nessun motore è fissato nella configurazione, quindi lo slot usa il proprietario predefinito.",
+      explicitHint: "Questo motore è fissato nella configurazione in plugins.slots.memory.",
+      offHint:
+        "La memoria è disattivata nella configurazione: plugins.slots.memory è impostato su none.",
+      catalogUnavailable: "Connettiti al Gateway per cambiare il motore della memoria.",
+      changeFailed: "Impossibile cambiare il motore della memoria",
+      disabledTitle: "Questo motore è disabilitato",
+      disabledHint:
+        "Lo slot di memoria punta a questo plugin, ma il plugin stesso è disabilitato, quindi la memoria non è in esecuzione.",
+      enable: "Abilita",
+    },
+    backend: {
+      title: "Backend",
+      description: "Modalità di archiviazione e recupero della memoria per il motore selezionato.",
+      rowTitle: "Backend di recupero",
+      builtin: "Integrato",
+      qmd: "QMD",
+      builtinHint: "I file di memoria vengono indicizzati e cercati direttamente da OpenClaw.",
+      qmdHint: "Il recupero è delegato a QMD. Le relative impostazioni sono riportate di seguito.",
+    },
+    addons: {
+      title: "Componenti aggiuntivi",
+      description:
+        "Questi plugin si sovrappongono al motore anziché competere per lo stesso slot, quindi possono essere eseguiti contemporaneamente in qualsiasi combinazione.",
+      activeMemory: {
+        title: "Memoria attiva",
+      },
+      memoryWiki: {
+        title: "Wiki della memoria",
+      },
+      stateUnknown: "Sconosciuto",
+      manage: "Abilita o disabilita i componenti aggiuntivi",
+      manageLink: "Apri Plugin",
+    },
+    import: {
+      title: "Importa",
+      description:
+        "Importa la memoria esistente da altri assistenti in uno spazio di lavoro dell'agente.",
+      link: "Apri Importazione memoria",
+    },
+    search: {
+      intro:
+        "Impostazioni predefinite di embedding e recupero condivise da tutti gli agenti che non dispongono di una configurazione personalizzata della memoria.",
+    },
+    dreaming: {
+      intro:
+        "Il dreaming viene eseguito come un unico processo cron gestito in tutti gli spazi di lavoro degli agenti, quindi queste impostazioni sono globali. Sono gestite dal plugin {plugin}.",
+      schedule: {
+        title: "Pianificazione",
+        description: "Quando viene eseguita la scansione completa e quale modello la racconta.",
+      },
+      frequency: {
+        label: "Frequenza del dreaming",
+        help: "Cadenza cron per la scansione completa del dreaming (leggero, REM, quindi profondo). Lascia vuoto per usare l'impostazione predefinita del plugin.",
+        placeholder: "0 3 * * *",
+      },
+      timezone: {
+        label: "Fuso orario",
+        help: "Fuso orario IANA utilizzato per interpretare la cadenza cron.",
+        placeholder: "Europe/Vienna",
+      },
+      model: {
+        label: "Modello per i sogni",
+        help: "Override del provider/modello per la narrazione del diario dei sogni. Richiede che gli override del modello del subagente siano consentiti.",
+        placeholder: "anthropic/claude-sonnet-4-6",
+      },
+      verboseLogging: {
+        label: "Registrazione dettagliata",
+        help: "Registra in dettaglio ogni fase dei sogni. Utile per ottimizzare le soglie.",
+      },
+      storage: {
+        title: "Archiviazione",
+        description: "Dove vengono scritti i ricordi promossi e i report sui sogni.",
+        modeLabel: "Modalità di archiviazione",
+        modeHelp:
+          "La modalità in linea scrive nel file di memoria; quella separata mantiene un file dedicato per i report.",
+        modes: {
+          inline: "In linea",
+          separate: "Separata",
+          both: "Entrambe",
+        },
+        separateReportsLabel: "Report separati",
+        separateReportsHelp: "Mantieni i report sui sogni fuori dal file di memoria principale.",
+      },
+      phases: {
+        light: {
+          title: "Fase leggera",
+          description:
+            "Analisi rapida ed economica delle attività recenti che prepara i candidati alla rielaborazione.",
+        },
+        deep: {
+          title: "Fase profonda",
+          description:
+            "Processo di promozione basato sul punteggio che trasferisce le voci a breve termine nella memoria.",
+        },
+        rem: {
+          title: "Fase REM",
+          description:
+            "Analisi dei pattern che cerca temi ricorrenti nell'intervallo temporale esaminato.",
+        },
+      },
+      phaseFields: {
+        enabled: "Abilitato",
+        enabledHelp: "Esegui questa fase durante la scansione.",
+        lookbackDays: "Giorni precedenti",
+        lookbackDaysHelp:
+          "Quanto indietro nel tempo legge questa fase. Lascia vuoto per usare il valore predefinito del plugin.",
+        limit: "Limite",
+        limitHelp: "Numero massimo di voci elaborate da questa fase per ogni esecuzione.",
+        dedupeSimilarity: "Similarità per la deduplicazione",
+        dedupeSimilarityHelp:
+          "Soglia di similarità oltre la quale due candidati vengono considerati duplicati.",
+        minScore: "Punteggio minimo",
+        minScoreHelp: "Punteggio di promozione che una voce deve raggiungere.",
+        minRecallCount: "Numero minimo di richiami",
+        minRecallCountHelp:
+          "Numero di volte in cui una voce deve essere richiamata prima di poter essere promossa.",
+        minUniqueQueries: "Numero minimo di query univoche",
+        minUniqueQueriesHelp: "Numero di query distinte che devono aver fatto emergere la voce.",
+        recencyHalfLifeDays: "Emivita della recenza (giorni)",
+        recencyHalfLifeDaysHelp:
+          "Rapidità con cui i segnali di richiamo meno recenti perdono peso.",
+        maxAgeDays: "Età massima (giorni)",
+        maxAgeDaysHelp: "Ignora le voci a breve termine più vecchie di questo limite.",
+        maxPromotedSnippetTokens: "Token massimi per frammento promosso",
+        maxPromotedSnippetTokensHelp:
+          "Budget di token per ogni frammento promosso. La provenienza rimane associata.",
+        minPatternStrength: "Intensità minima del pattern",
+        minPatternStrengthHelp:
+          "Intensità che un pattern ricorrente deve raggiungere per essere segnalato.",
+      },
+      agentScope: {
+        title: "Vista agente",
+        description:
+          "Le impostazioni precedenti sono globali. Il diario dei sogni, i conteggi a breve termine e le azioni di manutenzione seguenti appartengono a un singolo agente.",
+        rowTitle: "Agente",
+      },
+      unsupported: {
+        title: "Impostazioni dei sogni",
+        rowTitle: "Non disponibile per questo motore",
+        description:
+          "Il plugin {plugin} gestisce lo slot di memoria e il relativo schema di configurazione non include una sezione dedicata ai sogni, pertanto queste impostazioni non possono essere salvate. Cambia il motore nella scheda Panoramica per modificarle.",
+      },
+    },
+  },
   sessionsPage: {
     hubTablistLabel: "Sezioni dei thread",
   },
@@ -2341,6 +2510,21 @@ export const it: TranslationMap = {
       description: "Consenti a Code Mode di orchestrare gruppi di subagenti in parallelo.",
       empty: "Nessuno swarm attivo.",
       defaultPhase: "Senza fase",
+    },
+    toolSearch: {
+      title: "Ricerca degli strumenti",
+      description:
+        "Mantieni visibile una directory limitata di strumenti e rendi accessibili gli altri tramite la ricerca, evitando che i cataloghi MCP e dei plugin di grandi dimensioni sovraccarichino il prompt.",
+    },
+    localModelLean: {
+      title: "Strumenti essenziali per i modelli locali",
+      description:
+        "Rimuovi gli strumenti predefiniti più pesanti, che i modelli locali più piccoli gestiscono con difficoltà, lasciando un insieme più ridotto che possano utilizzare in modo affidabile.",
+    },
+    auditMessages: {
+      title: "Metadati di audit dei messaggi",
+      description:
+        "Registra nel registro di audit metadati privi di contenuto per le conversazioni dirette. Il contenuto dei messaggi non viene mai memorizzato.",
     },
   },
   aboutPage: {
@@ -3138,6 +3322,7 @@ export const it: TranslationMap = {
     },
   },
   attention: {
+    cronErrorUnknown: "Errore sconosciuto",
     cronFailed: "{count} processi cron non riusciti",
     cronOverdue: "{count} processi cron scaduti",
     modelAuthExpired: "Autenticazione del modello scaduta: {providers}",

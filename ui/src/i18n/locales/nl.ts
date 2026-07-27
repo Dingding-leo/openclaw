@@ -41,6 +41,7 @@ export const nl: TranslationMap = {
     unselect: "Deselecteren",
     enabled: "Ingeschakeld",
     disabled: "Uitgeschakeld",
+    failed: "Mislukt",
     none: "geen",
     na: "n.v.t.",
     never: "nooit",
@@ -611,6 +612,12 @@ export const nl: TranslationMap = {
     createOutcomeUnknown:
       "De Gateway is gewijzigd terwijl deze sessie werd gestart. Controleer recente sessies voordat u deze taak opnieuw start.",
     catalogUnavailable: "Dit sessiedoel is niet beschikbaar.",
+  },
+  dashboardsPage: {
+    emptyTitle: "Nog geen dashboards",
+    emptyDescription:
+      "Open een thread en schakel over naar de Dashboard-weergave om deze hier toe te voegen.",
+    loadError: "Kan dashboards niet laden: {error}",
   },
   sessionsView: {
     deletePreservedWorktrees:
@@ -1846,6 +1853,7 @@ export const nl: TranslationMap = {
     skillWorkshop: "Skill Workshop",
     nodes: "Nodes",
     chat: "Chat",
+    dashboards: "Dashboards",
     custodian: "OpenClaw",
     config: "Config",
     profile: "Profiel",
@@ -1853,6 +1861,7 @@ export const nl: TranslationMap = {
     appearance: "Weergave",
     automation: "Automatisering",
     mcp: "MCP",
+    memory: "Geheugen",
     infrastructure: "Infrastructuur",
     labs: "Labs",
     about: "Over",
@@ -1882,6 +1891,7 @@ export const nl: TranslationMap = {
     skillWorkshop: "Bekijk, verfijn en pas voorstellen toe voordat ze live Skills worden.",
     nodes: "Gekoppelde apparaten en commando's.",
     chat: "Gateway-chat voor snelle interventies.",
+    dashboards: "Threads die worden geopend in hun Dashboard-weergave.",
     custodian: "Systeeminstellingen en onderhoud.",
     config: "Bewerk openclaw.json.",
     profile: "De statistieken, reeksen en het leven in het rif van je agent.",
@@ -1889,6 +1899,7 @@ export const nl: TranslationMap = {
     appearance: "Thema, UI en instellingen voor de installatiewizard.",
     automation: "Commando's, hooks, cron en plugins.",
     mcp: "MCP-servers, auth, tools en diagnostiek.",
+    memory: "Geheugenengine, backend, zoeken en dromen.",
     infrastructure: "Gateway-, web-, browser- en media-instellingen.",
     labs: "Experimentele agent- en toolmogelijkheden.",
     about: "Control UI en verbonden Gateway build-identiteit.",
@@ -2160,6 +2171,167 @@ export const nl: TranslationMap = {
     tlsVerifyOff: "TLS-verificatie uit",
     mtls: "mTLS",
   },
+  memoryPage: {
+    tablistLabel: "Geheugensecties",
+    tabs: {
+      overview: "Overzicht",
+      search: "Zoeken",
+      dreaming: "Dromen",
+    },
+    engine: {
+      title: "Engine",
+      description:
+        "Precies één geheugenplug-in beheert het geheugenslot. Als u een engine selecteert, wordt deze ingeschakeld en worden de andere uitgeschakeld.",
+      rowTitle: "Geheugenengine",
+      off: "Uit",
+      autoHint:
+        "Er is geen engine vastgelegd in de configuratie, dus het slot valt terug op de standaardeigenaar.",
+      explicitHint: "Deze engine is in de configuratie vastgelegd onder plugins.slots.memory.",
+      offHint:
+        "Geheugen is uitgeschakeld in de configuratie: plugins.slots.memory is ingesteld op none.",
+      catalogUnavailable: "Maak verbinding met de Gateway om de geheugenengine te wijzigen.",
+      changeFailed: "Kan de geheugenengine niet wijzigen",
+      disabledTitle: "Deze engine is uitgeschakeld",
+      disabledHint:
+        "Het geheugenslot verwijst naar deze plug-in, maar de plug-in zelf is uitgeschakeld. Het geheugen is daarom niet actief.",
+      enable: "Inschakelen",
+    },
+    backend: {
+      title: "Backend",
+      description: "Hoe geheugen wordt opgeslagen en opgehaald voor de geselecteerde engine.",
+      rowTitle: "Backend voor ophalen",
+      builtin: "Ingebouwd",
+      qmd: "QMD",
+      builtinHint: "Geheugenbestanden worden door OpenClaw zelf geïndexeerd en doorzocht.",
+      qmdHint:
+        "Het ophalen wordt gedelegeerd aan QMD. De bijbehorende instellingen worden hieronder weergegeven.",
+    },
+    addons: {
+      title: "Add-ons",
+      description:
+        "Deze plug-ins vormen een extra laag boven op de engine in plaats van om dezelfde plek te concurreren, zodat elke combinatie gelijktijdig kan worden uitgevoerd.",
+      activeMemory: {
+        title: "Actief geheugen",
+      },
+      memoryWiki: {
+        title: "Geheugenwiki",
+      },
+      stateUnknown: "Onbekend",
+      manage: "Add-ons in- of uitschakelen",
+      manageLink: "Plug-ins openen",
+    },
+    import: {
+      title: "Importeren",
+      description:
+        "Importeer bestaand geheugen van andere assistenten in de werkruimte van een agent.",
+      link: "Geheugenimport openen",
+    },
+    search: {
+      intro:
+        "Standaardinstellingen voor embeddings en ophalen die worden gedeeld door alle agents zonder geheugenoverschrijving.",
+    },
+    dreaming: {
+      intro:
+        "Dreaming wordt als één beheerde cron-taak uitgevoerd voor alle agentwerkruimten, dus deze instellingen zijn globaal. Ze worden beheerd door de plug-in {plugin}.",
+      schedule: {
+        title: "Planning",
+        description:
+          "Wanneer de volledige cyclus wordt uitgevoerd en welk model deze van commentaar voorziet.",
+      },
+      frequency: {
+        label: "Dreaming-frequentie",
+        help: "Cron-interval voor de volledige dreaming-cyclus (licht, REM en vervolgens diep). Laat dit leeg om de standaardinstelling van de plug-in te gebruiken.",
+        placeholder: "0 3 * * *",
+      },
+      timezone: {
+        label: "Tijdzone",
+        help: "IANA-tijdzone die wordt gebruikt om het cron-interval te interpreteren.",
+        placeholder: "Europe/Vienna",
+      },
+      model: {
+        label: "Droommodel",
+        help: "Overschrijft de provider/het model voor het vertellen van het droomdagboek. Hiervoor moeten modeloverschrijvingen voor subagenten zijn toegestaan.",
+        placeholder: "anthropic/claude-sonnet-4-6",
+      },
+      verboseLogging: {
+        label: "Uitgebreide logboekregistratie",
+        help: "Registreer elke droomfase gedetailleerd. Nuttig bij het afstellen van drempelwaarden.",
+      },
+      storage: {
+        title: "Opslag",
+        description: "Waar gepromoveerde herinneringen en droomrapporten worden opgeslagen.",
+        modeLabel: "Opslagmodus",
+        modeHelp:
+          "Inline schrijft naar het geheugenbestand; Afzonderlijk gebruikt een speciaal rapportbestand.",
+        modes: {
+          inline: "Inline",
+          separate: "Afzonderlijk",
+          both: "Beide",
+        },
+        separateReportsLabel: "Afzonderlijke rapporten",
+        separateReportsHelp: "Houd droomrapporten buiten het hoofdgeheugenbestand.",
+      },
+      phases: {
+        light: {
+          title: "Lichte fase",
+          description:
+            "Voordelige verwerking van recente activiteit die kandidaten voor herhaling klaarzet.",
+        },
+        deep: {
+          title: "Diepe fase",
+          description:
+            "Promotieverwerking op basis van scores die kortetermijnitems naar het geheugen promoveert.",
+        },
+        rem: {
+          title: "REM-fase",
+          description:
+            "Patroonanalyse die zoekt naar terugkerende thema's binnen de terugblikperiode.",
+        },
+      },
+      phaseFields: {
+        enabled: "Ingeschakeld",
+        enabledHelp: "Voer deze fase uit tijdens de scan.",
+        lookbackDays: "Terugblik in dagen",
+        lookbackDaysHelp:
+          "Hoe ver deze fase terugkijkt. Laat leeg om de standaardwaarde van de plugin te gebruiken.",
+        limit: "Limiet",
+        limitHelp: "Maximumaantal items dat deze fase per uitvoering verwerkt.",
+        dedupeSimilarity: "Overeenkomst voor ontdubbeling",
+        dedupeSimilarityHelp:
+          "Boven deze mate van overeenkomst worden twee kandidaten als duplicaten beschouwd.",
+        minScore: "Minimumscore",
+        minScoreHelp: "Promotiescore die een item moet behalen.",
+        minRecallCount: "Minimumaantal herinneringen",
+        minRecallCountHelp:
+          "Hoe vaak een item moet zijn herinnerd voordat het kan worden gepromoveerd.",
+        minUniqueQueries: "Minimumaantal unieke zoekopdrachten",
+        minUniqueQueriesHelp:
+          "Hoeveel verschillende zoekopdrachten het item naar voren moeten hebben gebracht.",
+        recencyHalfLifeDays: "Halfwaardetijd voor recentheid (dagen)",
+        recencyHalfLifeDaysHelp: "Hoe snel oudere herinneringssignalen aan gewicht verliezen.",
+        maxAgeDays: "Maximumleeftijd (dagen)",
+        maxAgeDaysHelp: "Negeer kortetermijnitems die ouder zijn dan dit.",
+        maxPromotedSnippetTokens: "Maximaal aantal tokens per gepromoveerd fragment",
+        maxPromotedSnippetTokensHelp:
+          "Tokenbudget voor elk gepromoveerd fragment. De herkomst blijft gekoppeld.",
+        minPatternStrength: "Minimale patroonsterkte",
+        minPatternStrengthHelp:
+          "De sterkte die een terugkerend patroon moet bereiken om te worden gerapporteerd.",
+      },
+      agentScope: {
+        title: "Agentweergave",
+        description:
+          "De bovenstaande instellingen zijn globaal. Het droomdagboek, de kortetermijnaantallen en de onderstaande onderhoudsacties horen bij één agent.",
+        rowTitle: "Agent",
+      },
+      unsupported: {
+        title: "Droominstellingen",
+        rowTitle: "Niet beschikbaar voor deze engine",
+        description:
+          "De plugin {plugin} beheert het geheugenslot en het configuratieschema ervan bevat geen sectie voor dromen. Deze instellingen kunnen daarom niet worden opgeslagen. Wijzig de engine op het tabblad Overzicht om ze te bewerken.",
+      },
+    },
+  },
   sessionsPage: {
     hubTablistLabel: "Threads-secties",
   },
@@ -2322,6 +2494,21 @@ export const nl: TranslationMap = {
       description: "Laat Code Mode groepen subagents parallel orkestreren.",
       empty: "Geen actieve swarms.",
       defaultPhase: "Zonder fase",
+    },
+    toolSearch: {
+      title: "Zoeken naar tools",
+      description:
+        "Houd een begrensde lijst met tools zichtbaar en maak de rest via zoeken beschikbaar, zodat grote MCP- en plugincatalogi de prompt niet langer overvol maken.",
+    },
+    localModelLean: {
+      title: "Efficiënte tools voor lokale modellen",
+      description:
+        "Verwijder zware standaardtools waarmee kleinere lokale modellen slecht overweg kunnen, zodat een kortere set overblijft die ze betrouwbaar kunnen gebruiken.",
+    },
+    auditMessages: {
+      title: "Auditmetadata van berichten",
+      description:
+        "Registreer inhoudsvrije metadata van rechtstreekse gesprekken in het auditlogboek. De inhoud van berichten wordt nooit opgeslagen.",
     },
   },
   aboutPage: {
@@ -3119,6 +3306,7 @@ export const nl: TranslationMap = {
     },
   },
   attention: {
+    cronErrorUnknown: "Onbekende fout",
     cronFailed: "{count} cronjob(s) mislukt",
     cronOverdue: "{count} cronjob(s) te laat",
     modelAuthExpired: "Modelauthenticatie verlopen: {providers}",

@@ -41,6 +41,7 @@ export const id: TranslationMap = {
     unselect: "Batalkan pilihan",
     enabled: "Diaktifkan",
     disabled: "Dinonaktifkan",
+    failed: "Gagal",
     none: "tidak ada",
     na: "t/a",
     never: "never",
@@ -603,6 +604,11 @@ export const id: TranslationMap = {
     createOutcomeUnknown:
       "Gateway berubah saat sesi ini dimulai. Periksa sesi terbaru sebelum memulai tugas ini lagi.",
     catalogUnavailable: "Target sesi ini tidak tersedia.",
+  },
+  dashboardsPage: {
+    emptyTitle: "Belum ada dasbor",
+    emptyDescription: "Buka utas dan beralih ke tampilan Dasbor untuk menambahkannya di sini.",
+    loadError: "Tidak dapat memuat dasbor: {error}",
   },
   sessionsView: {
     deletePreservedWorktrees:
@@ -1837,6 +1843,7 @@ export const id: TranslationMap = {
     skillWorkshop: "Skill Workshop",
     nodes: "Node",
     chat: "Chat",
+    dashboards: "Dasbor",
     custodian: "OpenClaw",
     config: "Konfigurasi",
     profile: "Profil",
@@ -1844,6 +1851,7 @@ export const id: TranslationMap = {
     appearance: "Tampilan",
     automation: "Otomatisasi",
     mcp: "MCP",
+    memory: "Memori",
     infrastructure: "Infrastruktur",
     labs: "Labs",
     about: "Tentang",
@@ -1873,6 +1881,7 @@ export const id: TranslationMap = {
     skillWorkshop: "Tinjau, sempurnakan, dan terapkan proposal sebelum menjadi Skills aktif.",
     nodes: "Perangkat yang dipasangkan dan perintah.",
     chat: "Chat Gateway untuk intervensi cepat.",
+    dashboards: "Utas yang dibuka pada tampilan dasbornya.",
     custodian: "Penyiapan dan perawatan sistem.",
     config: "Edit openclaw.json.",
     profile: "Statistik, rentetan, dan kehidupan agen Anda di reef.",
@@ -1880,6 +1889,7 @@ export const id: TranslationMap = {
     appearance: "Tema, UI, dan pengaturan wizard penyiapan.",
     automation: "Perintah, hook, cron, dan plugin.",
     mcp: "Server MCP, autentikasi, alat, dan diagnostik.",
+    memory: "Mesin memori, backend, pencarian, dan bermimpi.",
     infrastructure: "Pengaturan Gateway, web, browser, dan media.",
     labs: "Kemampuan agen dan alat eksperimental.",
     about: "Control UI dan Gateway yang terhubung membangun identitas.",
@@ -2148,6 +2158,162 @@ export const id: TranslationMap = {
     tlsVerifyOff: "verifikasi TLS mati",
     mtls: "mTLS",
   },
+  memoryPage: {
+    tablistLabel: "Bagian memori",
+    tabs: {
+      overview: "Ikhtisar",
+      search: "Pencarian",
+      dreaming: "Bermimpi",
+    },
+    engine: {
+      title: "Mesin",
+      description:
+        "Tepat satu plugin memori menempati slot memori. Memilih mesin akan mengaktifkannya dan menonaktifkan mesin lainnya.",
+      rowTitle: "Mesin memori",
+      off: "Nonaktif",
+      autoHint:
+        "Tidak ada mesin yang disematkan dalam konfigurasi, sehingga slot kembali ke pemilik defaultnya.",
+      explicitHint: "Mesin ini disematkan dalam konfigurasi di plugins.slots.memory.",
+      offHint: "Memori dinonaktifkan dalam konfigurasi: plugins.slots.memory diatur ke none.",
+      catalogUnavailable: "Hubungkan ke Gateway untuk mengubah mesin memori.",
+      changeFailed: "Tidak dapat mengubah mesin memori",
+      disabledTitle: "Mesin ini dinonaktifkan",
+      disabledHint:
+        "Slot memori mengarah ke plugin ini, tetapi plugin itu sendiri dinonaktifkan, sehingga memori tidak berjalan.",
+      enable: "Aktifkan",
+    },
+    backend: {
+      title: "Backend",
+      description: "Cara memori disimpan dan diambil untuk mesin yang dipilih.",
+      rowTitle: "Backend pengambilan",
+      builtin: "Bawaan",
+      qmd: "QMD",
+      builtinHint: "File memori diindeks dan dicari oleh OpenClaw sendiri.",
+      qmdHint: "Pengambilan didelegasikan ke QMD. Pengaturannya ditampilkan di bawah.",
+    },
+    addons: {
+      title: "Pengaya",
+      description:
+        "Plugin ini berjalan di atas mesin alih-alih bersaing memperebutkan slot, sehingga kombinasi apa pun dapat berjalan sekaligus.",
+      activeMemory: {
+        title: "Memori aktif",
+      },
+      memoryWiki: {
+        title: "Wiki memori",
+      },
+      stateUnknown: "Tidak diketahui",
+      manage: "Aktifkan atau nonaktifkan pengaya",
+      manageLink: "Buka Plugins",
+    },
+    import: {
+      title: "Impor",
+      description: "Impor memori yang sudah ada dari asisten lain ke ruang kerja agen.",
+      link: "Buka Impor Memori",
+    },
+    search: {
+      intro:
+        "Default embedding dan pengambilan yang digunakan bersama oleh setiap agen yang tidak memiliki penggantian memori.",
+    },
+    dreaming: {
+      intro:
+        "Proses dreaming berjalan sebagai satu tugas cron terkelola di seluruh ruang kerja agen, sehingga pengaturan ini bersifat global. Pengaturan ini dikelola oleh plugin {plugin}.",
+      schedule: {
+        title: "Jadwal",
+        description: "Waktu pemindaian penuh dijalankan dan model yang menarasikannya.",
+      },
+      frequency: {
+        label: "Frekuensi dreaming",
+        help: "Jadwal cron untuk pemindaian dreaming penuh (ringan, REM, lalu dalam). Biarkan kosong untuk menggunakan default plugin.",
+        placeholder: "0 3 * * *",
+      },
+      timezone: {
+        label: "Zona waktu",
+        help: "Zona waktu IANA yang digunakan untuk menafsirkan jadwal cron.",
+        placeholder: "Europe/Vienna",
+      },
+      model: {
+        label: "Model bermimpi",
+        help: "Penggantian penyedia/model untuk narasi jurnal mimpi. Mengharuskan penggantian model subagen diizinkan.",
+        placeholder: "anthropic/claude-sonnet-4-6",
+      },
+      verboseLogging: {
+        label: "Pencatatan mendetail",
+        help: "Catat setiap fase bermimpi secara mendetail. Berguna saat menyetel ambang batas.",
+      },
+      storage: {
+        title: "Penyimpanan",
+        description: "Lokasi penulisan memori yang dipromosikan dan laporan bermimpi.",
+        modeLabel: "Mode penyimpanan",
+        modeHelp:
+          "Mode sebaris menulis ke dalam file memori; mode terpisah menggunakan file laporan khusus.",
+        modes: {
+          inline: "Sebaris",
+          separate: "Terpisah",
+          both: "Keduanya",
+        },
+        separateReportsLabel: "Laporan terpisah",
+        separateReportsHelp: "Simpan laporan bermimpi di luar file memori utama.",
+      },
+      phases: {
+        light: {
+          title: "Fase ringan",
+          description:
+            "Proses ringan untuk aktivitas terkini yang menyiapkan kandidat pemutaran ulang.",
+        },
+        deep: {
+          title: "Fase dalam",
+          description:
+            "Proses promosi berbasis skor yang memindahkan entri jangka pendek ke dalam memori.",
+        },
+        rem: {
+          title: "Fase REM",
+          description: "Pemindaian pola yang mencari tema berulang dalam rentang waktu peninjauan.",
+        },
+      },
+      phaseFields: {
+        enabled: "Aktif",
+        enabledHelp: "Jalankan fase ini selama pemindaian.",
+        lookbackDays: "Hari peninjauan",
+        lookbackDaysHelp:
+          "Seberapa jauh ke belakang fase ini membaca. Biarkan kosong untuk menggunakan nilai default plugin.",
+        limit: "Batas",
+        limitHelp: "Jumlah maksimum entri yang diproses fase ini per eksekusi.",
+        dedupeSimilarity: "Kemiripan deduplikasi",
+        dedupeSimilarityHelp:
+          "Tingkat kemiripan yang jika terlampaui akan membuat dua kandidat dianggap sebagai duplikat.",
+        minScore: "Skor minimum",
+        minScoreHelp: "Skor promosi yang harus dicapai oleh suatu entri.",
+        minRecallCount: "Jumlah pemanggilan kembali minimum",
+        minRecallCountHelp:
+          "Seberapa sering suatu entri harus dipanggil kembali sebelum dapat dipromosikan.",
+        minUniqueQueries: "Kueri unik minimum",
+        minUniqueQueriesHelp: "Jumlah kueri berbeda yang harus telah memunculkan entri tersebut.",
+        recencyHalfLifeDays: "Waktu paruh kekinian (hari)",
+        recencyHalfLifeDaysHelp:
+          "Seberapa cepat sinyal pemanggilan kembali yang lebih lama kehilangan bobot.",
+        maxAgeDays: "Usia maksimum (hari)",
+        maxAgeDaysHelp: "Abaikan entri jangka pendek yang lebih lama dari batas ini.",
+        maxPromotedSnippetTokens: "Token maksimum cuplikan yang dipromosikan",
+        maxPromotedSnippetTokensHelp:
+          "Anggaran token untuk setiap cuplikan yang dipromosikan. Provenans tetap terlampir.",
+        minPatternStrength: "Kekuatan pola minimum",
+        minPatternStrengthHelp:
+          "Kekuatan yang harus dicapai oleh pola berulang agar dapat dilaporkan.",
+      },
+      agentScope: {
+        title: "Tampilan agen",
+        description:
+          "Pengaturan di atas berlaku secara global. Catatan mimpi, jumlah jangka pendek, dan tindakan pemeliharaan di bawah ini berlaku untuk satu agen.",
+        rowTitle: "Agen",
+      },
+      unsupported: {
+        title: "Pengaturan mimpi",
+        rowTitle: "Tidak tersedia untuk mesin ini",
+        description:
+          "Plugin {plugin} memiliki slot memori dan skema konfigurasinya tidak memiliki bagian mimpi, sehingga pengaturan ini tidak dapat disimpan. Ganti mesin di tab Ikhtisar untuk mengeditnya.",
+      },
+    },
+  },
   sessionsPage: {
     hubTablistLabel: "Bagian thread",
   },
@@ -2307,6 +2473,21 @@ export const id: TranslationMap = {
       description: "Biarkan Code Mode mengorkestrasi grup subagen secara paralel.",
       empty: "Tidak ada swarm aktif.",
       defaultPhase: "Tanpa Fase",
+    },
+    toolSearch: {
+      title: "Pencarian Alat",
+      description:
+        "Tampilkan direktori alat yang dibatasi dan letakkan sisanya di balik pencarian, sehingga katalog MCP dan plugin yang besar tidak lagi memenuhi prompt.",
+    },
+    localModelLean: {
+      title: "Alat ringan untuk model lokal",
+      description:
+        "Hapus alat bawaan berkapasitas besar yang sulit ditangani oleh model lokal yang lebih kecil, sehingga tersisa kumpulan yang lebih ringkas dan dapat digunakan dengan andal.",
+    },
+    auditMessages: {
+      title: "Metadata audit pesan",
+      description:
+        "Catat metadata tanpa konten untuk percakapan langsung dalam buku besar audit. Konten pesan tidak pernah disimpan.",
     },
   },
   aboutPage: {
@@ -3103,6 +3284,7 @@ export const id: TranslationMap = {
     },
   },
   attention: {
+    cronErrorUnknown: "Kesalahan tidak diketahui",
     cronFailed: "{count} tugas cron gagal",
     cronOverdue: "{count} tugas cron terlambat",
     modelAuthExpired: "Autentikasi model telah kedaluwarsa: {providers}",

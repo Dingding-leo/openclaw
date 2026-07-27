@@ -41,6 +41,7 @@ export const zh_TW: TranslationMap = {
     unselect: "取消選取",
     enabled: "已啟用",
     disabled: "已禁用",
+    failed: "失敗",
     none: "無",
     na: "不適用",
     never: "never",
@@ -582,6 +583,11 @@ export const zh_TW: TranslationMap = {
     createOutcomeUnknown:
       "此工作階段啟動期間，Gateway 已變更。再次啟動此工作前，請先查看最近的工作階段。",
     catalogUnavailable: "此工作階段目標無法使用。",
+  },
+  dashboardsPage: {
+    emptyTitle: "尚無儀表板",
+    emptyDescription: "開啟對話串並切換至「儀表板」介面，即可將其新增至此處。",
+    loadError: "無法載入儀表板：{error}",
   },
   sessionsView: {
     deletePreservedWorktrees:
@@ -1795,6 +1801,7 @@ export const zh_TW: TranslationMap = {
     skillWorkshop: "Skill Workshop",
     nodes: "節點",
     chat: "聊天",
+    dashboards: "儀表板",
     custodian: "OpenClaw",
     config: "配置",
     profile: "個人檔案",
@@ -1802,6 +1809,7 @@ export const zh_TW: TranslationMap = {
     appearance: "外觀與設置",
     automation: "自動化",
     mcp: "MCP",
+    memory: "記憶體",
     infrastructure: "基礎設施",
     labs: "實驗室",
     about: "關於",
@@ -1831,6 +1839,7 @@ export const zh_TW: TranslationMap = {
     skillWorkshop: "在提案成為上線技能之前，先進行審閱、調整並套用。",
     nodes: "配對設備和命令。",
     chat: "網關聊天，快速干預。",
+    dashboards: "開啟時顯示儀表板介面的對話串。",
     custodian: "系統設定與維護。",
     config: "編輯 openclaw.json。",
     profile: "你的代理程式統計、連續紀錄，以及在礁區中的生活。",
@@ -1838,6 +1847,7 @@ export const zh_TW: TranslationMap = {
     appearance: "主題、界面和設置向導設置。",
     automation: "命令、鉤子、定時任務和插件設置。",
     mcp: "MCP 伺服器、驗證、工具與診斷。",
+    memory: "記憶引擎、後端、搜尋與夢境處理。",
     infrastructure: "網關、Web、瀏覽器和媒體設置。",
     labs: "實驗性代理與工具功能。",
     about: "Control UI 與已連線的 Gateway 建置身分識別。",
@@ -2099,6 +2109,148 @@ export const zh_TW: TranslationMap = {
     tlsVerifyOff: "TLS 驗證已關閉",
     mtls: "mTLS",
   },
+  memoryPage: {
+    tablistLabel: "記憶區段",
+    tabs: {
+      overview: "總覽",
+      search: "搜尋",
+      dreaming: "夢境處理",
+    },
+    engine: {
+      title: "引擎",
+      description: "記憶插槽只能由一個記憶外掛程式管理。選取引擎會啟用該引擎並停用其他引擎。",
+      rowTitle: "記憶引擎",
+      off: "關閉",
+      autoHint: "設定中未固定指定引擎，因此插槽會回復使用其預設的管理者。",
+      explicitHint: "此引擎已在設定的 plugins.slots.memory 下固定指定。",
+      offHint: "設定中已關閉記憶功能：plugins.slots.memory 設為 none。",
+      catalogUnavailable: "請連線至 Gateway 以變更記憶引擎。",
+      changeFailed: "無法變更記憶引擎",
+      disabledTitle: "此引擎已停用",
+      disabledHint: "記憶插槽指向此外掛程式，但外掛程式本身已停用，因此記憶功能未執行。",
+      enable: "啟用",
+    },
+    backend: {
+      title: "後端",
+      description: "所選引擎儲存及擷取記憶的方式。",
+      rowTitle: "檢索後端",
+      builtin: "內建",
+      qmd: "QMD",
+      builtinHint: "記憶檔案由 OpenClaw 本身建立索引並搜尋。",
+      qmdHint: "檢索工作會交由 QMD 處理。其設定顯示於下方。",
+    },
+    addons: {
+      title: "附加元件",
+      description:
+        "這些外掛程式會疊加在引擎之上，而非彼此競爭同一個位置，因此任何組合都能同時執行。",
+      activeMemory: {
+        title: "主動記憶",
+      },
+      memoryWiki: {
+        title: "記憶 Wiki",
+      },
+      stateUnknown: "未知",
+      manage: "啟用或停用附加元件",
+      manageLink: "開啟外掛程式",
+    },
+    import: {
+      title: "匯入",
+      description: "將其他助理中的現有記憶匯入代理程式工作區。",
+      link: "開啟記憶匯入",
+    },
+    search: {
+      intro: "由所有未設定記憶覆寫的代理程式共用的嵌入與檢索預設值。",
+    },
+    dreaming: {
+      intro:
+        "夢境處理會以一個受管理的 cron 工作，在所有代理程式工作區中執行，因此這些設定是全域設定。這些設定由 {plugin} 外掛程式管理。",
+      schedule: {
+        title: "排程",
+        description: "完整掃描的執行時間，以及用於敘述的模型。",
+      },
+      frequency: {
+        label: "夢境處理頻率",
+        help: "完整夢境處理掃描（淺層、REM，接著深層）的 cron 執行週期。留空以使用外掛程式的預設值。",
+        placeholder: "0 3 * * *",
+      },
+      timezone: {
+        label: "時區",
+        help: "用於解讀 cron 執行週期的 IANA 時區。",
+        placeholder: "Europe/Vienna",
+      },
+      model: {
+        label: "夢境模型",
+        help: "覆寫夢境日記敘述所使用的供應商/模型。必須允許覆寫子代理模型。",
+        placeholder: "anthropic/claude-sonnet-4-6",
+      },
+      verboseLogging: {
+        label: "詳細記錄",
+        help: "詳細記錄每個夢境階段。適合用於調整閾值。",
+      },
+      storage: {
+        title: "儲存空間",
+        description: "寫入已提升記憶與夢境報告的位置。",
+        modeLabel: "儲存模式",
+        modeHelp: "行內模式會寫入記憶檔案；分開模式則會使用專用的報告檔案。",
+        modes: {
+          inline: "行內",
+          separate: "分開",
+          both: "兩者",
+        },
+        separateReportsLabel: "分開儲存報告",
+        separateReportsHelp: "將夢境報告與主要記憶檔案分開儲存。",
+      },
+      phases: {
+        light: {
+          title: "淺層階段",
+          description: "以低成本掃描近期活動，暫存重播候選項目。",
+        },
+        deep: {
+          title: "深層階段",
+          description: "透過評分提升，將短期項目轉入記憶。",
+        },
+        rem: {
+          title: "REM 階段",
+          description: "在回溯期間內尋找重複出現主題的模式掃描。",
+        },
+      },
+      phaseFields: {
+        enabled: "已啟用",
+        enabledHelp: "在掃描期間執行此階段。",
+        lookbackDays: "回溯天數",
+        lookbackDaysHelp: "此階段向前讀取的天數。留空則使用外掛程式的預設值。",
+        limit: "上限",
+        limitHelp: "此階段每次執行時可處理的項目數上限。",
+        dedupeSimilarity: "去重相似度",
+        dedupeSimilarityHelp: "當相似度高於此值時，會將兩個候選項目視為重複。",
+        minScore: "最低分數",
+        minScoreHelp: "項目必須達到的提升分數。",
+        minRecallCount: "最低召回次數",
+        minRecallCountHelp: "項目在可被提升前必須被召回的次數。",
+        minUniqueQueries: "最低不重複查詢數",
+        minUniqueQueriesHelp: "必須有多少個不同的查詢曾顯示此項目。",
+        recencyHalfLifeDays: "近期性半衰期（天）",
+        recencyHalfLifeDaysHelp: "較舊的召回訊號權重降低的速度。",
+        maxAgeDays: "最長存續時間（天）",
+        maxAgeDaysHelp: "忽略早於此期限的短期項目。",
+        maxPromotedSnippetTokens: "提升片段的權杖數上限",
+        maxPromotedSnippetTokensHelp: "每個提升片段的權杖預算。來源資訊會保持附加。",
+        minPatternStrength: "最低模式強度",
+        minPatternStrengthHelp: "重複出現的模式必須達到此強度才會回報。",
+      },
+      agentScope: {
+        title: "代理程式檢視",
+        description: "上述設定為全域設定。下方的夢境日誌、短期計數和維護操作屬於單一代理程式。",
+        rowTitle: "代理程式",
+      },
+      unsupported: {
+        title: "夢境設定",
+        rowTitle: "不適用於此引擎",
+        description:
+          "{plugin} 外掛程式占用記憶體插槽，且其設定結構描述沒有夢境區段，因此無法儲存這些設定。請在「概覽」分頁中切換引擎以編輯這些設定。",
+      },
+    },
+  },
   sessionsPage: {
     hubTablistLabel: "討論串區段",
   },
@@ -2248,6 +2400,20 @@ export const zh_TW: TranslationMap = {
       description: "讓程式碼模式並行協調多組子代理程式。",
       empty: "沒有進行中的 swarm。",
       defaultPhase: "未分階段",
+    },
+    toolSearch: {
+      title: "工具搜尋",
+      description:
+        "只顯示數量受限的工具目錄，並將其餘工具延後至搜尋時才顯示，避免大型 MCP 和外掛程式目錄占滿提示。",
+    },
+    localModelLean: {
+      title: "適用於本機模型的精簡工具",
+      description:
+        "移除較小型本機模型難以妥善處理的重量級預設工具，留下更精簡且能可靠使用的工具集。",
+    },
+    auditMessages: {
+      title: "訊息稽核中繼資料",
+      description: "在稽核記錄中記錄直接對話的不含內容中繼資料。絕不會儲存訊息內容。",
     },
   },
   aboutPage: {
@@ -3032,6 +3198,7 @@ export const zh_TW: TranslationMap = {
     },
   },
   attention: {
+    cronErrorUnknown: "未知錯誤",
     cronFailed: "{count} 個 cron 工作失敗",
     cronOverdue: "{count} 個 cron 工作逾期",
     modelAuthExpired: "模型驗證已過期：{providers}",

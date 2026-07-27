@@ -41,6 +41,7 @@ export const zh_CN: TranslationMap = {
     unselect: "取消选择",
     enabled: "已启用",
     disabled: "已禁用",
+    failed: "失败",
     none: "无",
     na: "不适用",
     never: "从未",
@@ -579,6 +580,11 @@ export const zh_CN: TranslationMap = {
     createFailed: "无法创建会话。",
     createOutcomeUnknown: "此会话启动期间 Gateway 发生了变化。再次启动此任务前，请检查最近的会话。",
     catalogUnavailable: "此会话目标不可用。",
+  },
+  dashboardsPage: {
+    emptyTitle: "暂无仪表板",
+    emptyDescription: "打开一个线程并切换到仪表板界面，即可将其添加到这里。",
+    loadError: "无法加载仪表板：{error}",
   },
   sessionsView: {
     deletePreservedWorktrees:
@@ -1790,6 +1796,7 @@ export const zh_CN: TranslationMap = {
     skillWorkshop: "技能工坊",
     nodes: "节点",
     chat: "聊天",
+    dashboards: "仪表板",
     custodian: "OpenClaw",
     config: "配置",
     profile: "个人资料",
@@ -1797,6 +1804,7 @@ export const zh_CN: TranslationMap = {
     appearance: "外观与设置",
     automation: "自动化",
     mcp: "MCP",
+    memory: "记忆",
     infrastructure: "基础设施",
     labs: "实验室",
     about: "关于",
@@ -1826,6 +1834,7 @@ export const zh_CN: TranslationMap = {
     skillWorkshop: "在提案成为上线技能之前，进行审查、优化并应用。",
     nodes: "配对设备和命令。",
     chat: "网关聊天，快速干预。",
+    dashboards: "在仪表板界面打开的线程。",
     custodian: "系统设置与维护。",
     config: "编辑 openclaw.json。",
     profile: "你的智能体在珊瑚礁中的统计、连续记录和动态。",
@@ -1833,6 +1842,7 @@ export const zh_CN: TranslationMap = {
     appearance: "主题、界面和设置向导设置。",
     automation: "命令、钩子、定时任务和插件设置。",
     mcp: "MCP 服务器、身份验证、工具和诊断。",
+    memory: "记忆引擎、后端、搜索和梦境。",
     infrastructure: "网关、Web、浏览器和媒体设置。",
     labs: "实验性代理和工具功能。",
     about: "Control UI 和已连接的 Gateway 构建标识。",
@@ -2092,6 +2102,147 @@ export const zh_CN: TranslationMap = {
     tlsVerifyOff: "TLS 验证已关闭",
     mtls: "mTLS",
   },
+  memoryPage: {
+    tablistLabel: "记忆分区",
+    tabs: {
+      overview: "概览",
+      search: "搜索",
+      dreaming: "梦境",
+    },
+    engine: {
+      title: "引擎",
+      description: "记忆槽只能由一个记忆插件占用。选择一个引擎会启用该引擎并禁用其他引擎。",
+      rowTitle: "记忆引擎",
+      off: "关闭",
+      autoHint: "配置中未固定引擎，因此该槽将回退到其默认所有者。",
+      explicitHint: "此引擎已在配置的 plugins.slots.memory 下固定。",
+      offHint: "记忆功能已在配置中关闭：plugins.slots.memory 设置为 none。",
+      catalogUnavailable: "请连接到 Gateway 以更改记忆引擎。",
+      changeFailed: "无法更改记忆引擎",
+      disabledTitle: "此引擎已禁用",
+      disabledHint: "记忆槽指向此插件，但插件本身已禁用，因此记忆功能未运行。",
+      enable: "启用",
+    },
+    backend: {
+      title: "后端",
+      description: "为所选引擎存储和检索记忆的方式。",
+      rowTitle: "检索后端",
+      builtin: "内置",
+      qmd: "QMD",
+      builtinHint: "内存文件由 OpenClaw 自身建立索引并进行搜索。",
+      qmdHint: "检索委托给 QMD。其设置显示在下方。",
+    },
+    addons: {
+      title: "附加组件",
+      description: "这些插件叠加在引擎之上，而不是争用同一个插槽，因此可以同时运行任意组合。",
+      activeMemory: {
+        title: "主动记忆",
+      },
+      memoryWiki: {
+        title: "记忆 Wiki",
+      },
+      stateUnknown: "未知",
+      manage: "启用或禁用附加组件",
+      manageLink: "打开插件",
+    },
+    import: {
+      title: "导入",
+      description: "将其他助手中的现有记忆导入智能体工作区。",
+      link: "打开记忆导入",
+    },
+    search: {
+      intro: "所有未设置记忆覆盖项的智能体共用的嵌入和检索默认设置。",
+    },
+    dreaming: {
+      intro:
+        "梦境处理作为一个托管的 cron 作业在所有智能体工作区中运行，因此这些设置是全局的。它们由 {plugin} 插件管理。",
+      schedule: {
+        title: "计划",
+        description: "设置完整扫描的运行时间以及用于叙述的模型。",
+      },
+      frequency: {
+        label: "梦境处理频率",
+        help: "完整梦境处理扫描（浅睡眠、REM，然后深睡眠）的 cron 频率。留空则使用插件默认值。",
+        placeholder: "0 3 * * *",
+      },
+      timezone: {
+        label: "时区",
+        help: "用于解析 cron 频率的 IANA 时区。",
+        placeholder: "Europe/Vienna",
+      },
+      model: {
+        label: "梦境模型",
+        help: "用于梦境日记叙述的提供商/模型覆盖。需要允许子代理模型覆盖。",
+        placeholder: "anthropic/claude-sonnet-4-6",
+      },
+      verboseLogging: {
+        label: "详细日志",
+        help: "详细记录每个梦境阶段。适用于调整阈值。",
+      },
+      storage: {
+        title: "存储",
+        description: "晋升后的记忆和梦境报告的写入位置。",
+        modeLabel: "存储模式",
+        modeHelp: "内联模式写入记忆文件；独立模式则保存在专用报告文件中。",
+        modes: {
+          inline: "内联",
+          separate: "独立",
+          both: "两者",
+        },
+        separateReportsLabel: "独立报告",
+        separateReportsHelp: "将梦境报告保存在主记忆文件之外。",
+      },
+      phases: {
+        light: {
+          title: "浅层阶段",
+          description: "以较低成本处理近期活动，暂存回放候选项。",
+        },
+        deep: {
+          title: "深层阶段",
+          description: "通过评分晋升，将短期条目转化为记忆。",
+        },
+        rem: {
+          title: "REM 阶段",
+          description: "在回溯窗口中查找重复出现主题的模式扫描。",
+        },
+      },
+      phaseFields: {
+        enabled: "已启用",
+        enabledHelp: "在扫描期间运行此阶段。",
+        lookbackDays: "回溯天数",
+        lookbackDaysHelp: "此阶段读取多早以前的数据。留空则使用插件默认值。",
+        limit: "上限",
+        limitHelp: "此阶段每次运行时处理的最大条目数。",
+        dedupeSimilarity: "去重相似度",
+        dedupeSimilarityHelp: "当相似度高于此值时，两个候选项将被视为重复项。",
+        minScore: "最低分数",
+        minScoreHelp: "条目晋升必须达到的分数。",
+        minRecallCount: "最少召回次数",
+        minRecallCountHelp: "条目在晋升前必须被召回的次数。",
+        minUniqueQueries: "最少唯一查询数",
+        minUniqueQueriesHelp: "必须有多少个不同的查询检索到该条目。",
+        recencyHalfLifeDays: "新近度半衰期（天）",
+        recencyHalfLifeDaysHelp: "较早的召回信号权重衰减的速度。",
+        maxAgeDays: "最大时长（天）",
+        maxAgeDaysHelp: "忽略早于此时长的短期条目。",
+        maxPromotedSnippetTokens: "晋升片段的最大 token 数",
+        maxPromotedSnippetTokensHelp: "每个晋升片段的 token 预算。来源信息将保持关联。",
+        minPatternStrength: "最低模式强度",
+        minPatternStrengthHelp: "重复出现的模式必须达到此强度才会被报告。",
+      },
+      agentScope: {
+        title: "智能体视图",
+        description: "上述设置是全局设置。下方的梦境日记、短期计数和维护操作属于单个智能体。",
+        rowTitle: "Agent",
+      },
+      unsupported: {
+        title: "梦境设置",
+        rowTitle: "此引擎不可用",
+        description:
+          "{plugin} 插件占用内存槽位，且其配置架构中没有梦境部分，因此无法存储这些设置。请在“概览”选项卡中切换引擎以编辑这些设置。",
+      },
+    },
+  },
   sessionsPage: {
     hubTablistLabel: "线程分区",
   },
@@ -2241,6 +2392,20 @@ export const zh_CN: TranslationMap = {
       description: "让代码模式并行编排多组子代理。",
       empty: "没有活跃的 swarm。",
       defaultPhase: "未分阶段",
+    },
+    toolSearch: {
+      title: "工具搜索",
+      description:
+        "保持显示一个规模受限的工具目录，并将其余工具置于搜索之后，从而避免大型 MCP 和插件目录挤占提示词空间。",
+    },
+    localModelLean: {
+      title: "适用于本地模型的精简工具",
+      description:
+        "移除较小型本地模型难以妥善处理的重量级默认工具，仅保留一组更精简且可可靠使用的工具。",
+    },
+    auditMessages: {
+      title: "消息审计元数据",
+      description: "在审计账本中记录直接对话的不含内容的元数据。绝不会存储消息内容。",
     },
   },
   aboutPage: {
@@ -3025,6 +3190,7 @@ export const zh_CN: TranslationMap = {
     },
   },
   attention: {
+    cronErrorUnknown: "未知错误",
     cronFailed: "{count} 个 cron 任务失败",
     cronOverdue: "{count} 个 cron 任务逾期",
     modelAuthExpired: "模型身份验证已过期：{providers}",

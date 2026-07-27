@@ -41,6 +41,7 @@ export const fr: TranslationMap = {
     unselect: "Désélectionner",
     enabled: "Activé",
     disabled: "Désactivé",
+    failed: "Échoué",
     none: "aucun",
     na: "n/d",
     never: "never",
@@ -618,6 +619,11 @@ export const fr: TranslationMap = {
     createOutcomeUnknown:
       "Le Gateway a changé pendant le démarrage de cette session. Consultez les sessions récentes avant de relancer cette tâche.",
     catalogUnavailable: "La cible de cette session est indisponible.",
+  },
+  dashboardsPage: {
+    emptyTitle: "Aucun tableau de bord pour le moment",
+    emptyDescription: "Ouvrez un fil et passez à la vue Tableau de bord pour l’ajouter ici.",
+    loadError: "Impossible de charger les tableaux de bord : {error}",
   },
   sessionsView: {
     deletePreservedWorktrees:
@@ -1864,6 +1870,7 @@ export const fr: TranslationMap = {
     skillWorkshop: "Atelier Skills",
     nodes: "Nœuds",
     chat: "Chat",
+    dashboards: "Tableaux de bord",
     custodian: "OpenClaw",
     config: "Configuration",
     profile: "Profil",
@@ -1871,6 +1878,7 @@ export const fr: TranslationMap = {
     appearance: "Apparence",
     automation: "Automatisation",
     mcp: "MCP",
+    memory: "Mémoire",
     infrastructure: "Infrastructure",
     labs: "Labs",
     about: "À propos",
@@ -1901,6 +1909,7 @@ export const fr: TranslationMap = {
       "Examinez, affinez et appliquez les propositions avant qu’elles ne deviennent des skills actives.",
     nodes: "Appareils appairés et commandes.",
     chat: "Chat Gateway pour les interventions rapides.",
+    dashboards: "Fils qui s’ouvrent sur leur vue Tableau de bord.",
     custodian: "Configuration et entretien du système.",
     config: "Modifier openclaw.json.",
     profile: "Les statistiques, les séries et la vie dans le récif de votre agent.",
@@ -1908,6 +1917,7 @@ export const fr: TranslationMap = {
     appearance: "Thème, UI et paramètres de l’assistant de configuration.",
     automation: "Commandes, hooks, cron et plugins.",
     mcp: "Serveurs MCP, authentification, outils et diagnostics.",
+    memory: "Moteur de mémoire, backend, recherche et rêverie.",
     infrastructure: "Paramètres Gateway, web, navigateur et médias.",
     labs: "Fonctionnalités expérimentales d'agent et d'outils.",
     about: "Le Control UI et le Gateway connecté définissent l’identité de build.",
@@ -2188,6 +2198,167 @@ export const fr: TranslationMap = {
     tlsVerifyOff: "vérification TLS désactivée",
     mtls: "mTLS",
   },
+  memoryPage: {
+    tablistLabel: "Sections de la mémoire",
+    tabs: {
+      overview: "Aperçu",
+      search: "Recherche",
+      dreaming: "Rêverie",
+    },
+    engine: {
+      title: "Moteur",
+      description:
+        "Un seul plugin de mémoire occupe l’emplacement mémoire. La sélection d’un moteur l’active et désactive les autres.",
+      rowTitle: "Moteur de mémoire",
+      off: "Désactivée",
+      autoHint:
+        "Aucun moteur n’est épinglé dans la configuration, l’emplacement utilise donc son propriétaire par défaut.",
+      explicitHint: "Ce moteur est épinglé dans la configuration sous plugins.slots.memory.",
+      offHint:
+        "La mémoire est désactivée dans la configuration : plugins.slots.memory est défini sur none.",
+      catalogUnavailable: "Connectez-vous au Gateway pour changer de moteur de mémoire.",
+      changeFailed: "Impossible de changer de moteur de mémoire",
+      disabledTitle: "Ce moteur est désactivé",
+      disabledHint:
+        "L’emplacement mémoire pointe vers ce plugin, mais le plugin lui-même est désactivé. La mémoire ne fonctionne donc pas.",
+      enable: "Activer",
+    },
+    backend: {
+      title: "Backend",
+      description: "Mode de stockage et de récupération de la mémoire pour le moteur sélectionné.",
+      rowTitle: "Backend de récupération",
+      builtin: "Intégré",
+      qmd: "QMD",
+      builtinHint: "Les fichiers de mémoire sont indexés et recherchés par OpenClaw.",
+      qmdHint: "La récupération est déléguée à QMD. Ses paramètres apparaissent ci-dessous.",
+    },
+    addons: {
+      title: "Modules complémentaires",
+      description:
+        "Ces plugins se superposent au moteur au lieu de se disputer l’emplacement, ce qui permet d’en exécuter simultanément n’importe quelle combinaison.",
+      activeMemory: {
+        title: "Mémoire active",
+      },
+      memoryWiki: {
+        title: "Wiki de la mémoire",
+      },
+      stateUnknown: "Inconnu",
+      manage: "Activer ou désactiver les modules complémentaires",
+      manageLink: "Ouvrir les plugins",
+    },
+    import: {
+      title: "Importer",
+      description:
+        "Importez la mémoire existante d’autres assistants dans l’espace de travail d’un agent.",
+      link: "Ouvrir l’importation de mémoire",
+    },
+    search: {
+      intro:
+        "Paramètres par défaut d’intégration vectorielle et de récupération partagés par tous les agents qui n’ont pas de configuration de mémoire spécifique.",
+    },
+    dreaming: {
+      intro:
+        "Le rêve s’exécute sous la forme d’une tâche cron gérée unique dans tous les espaces de travail des agents ; ces paramètres sont donc globaux. Ils sont gérés par le plugin {plugin}.",
+      schedule: {
+        title: "Planification",
+        description: "Moment d’exécution du cycle complet et modèle utilisé pour le raconter.",
+      },
+      frequency: {
+        label: "Fréquence du rêve",
+        help: "Cadence cron du cycle de rêve complet (léger, paradoxal, puis profond). Laissez ce champ vide pour utiliser la valeur par défaut du plugin.",
+        placeholder: "0 3 * * *",
+      },
+      timezone: {
+        label: "Fuseau horaire",
+        help: "Fuseau horaire IANA utilisé pour interpréter la cadence cron.",
+        placeholder: "Europe/Vienna",
+      },
+      model: {
+        label: "Modèle de rêve",
+        help: "Remplacement du fournisseur/modèle pour la narration du journal de rêves. Nécessite que les remplacements de modèle des sous-agents soient autorisés.",
+        placeholder: "anthropic/claude-sonnet-4-6",
+      },
+      verboseLogging: {
+        label: "Journalisation détaillée",
+        help: "Consigne chaque phase de rêve en détail. Utile pour ajuster les seuils.",
+      },
+      storage: {
+        title: "Stockage",
+        description:
+          "Emplacement où sont enregistrés les souvenirs promus et les rapports de rêves.",
+        modeLabel: "Mode de stockage",
+        modeHelp:
+          "Le mode intégré écrit dans le fichier de mémoire ; le mode séparé conserve un fichier de rapport dédié.",
+        modes: {
+          inline: "Intégré",
+          separate: "Séparé",
+          both: "Les deux",
+        },
+        separateReportsLabel: "Rapports séparés",
+        separateReportsHelp:
+          "Conserve les rapports de rêves en dehors du fichier de mémoire principal.",
+      },
+      phases: {
+        light: {
+          title: "Phase légère",
+          description:
+            "Analyse économique de l’activité récente qui prépare les éléments candidats à la réexécution.",
+        },
+        deep: {
+          title: "Phase profonde",
+          description:
+            "Analyse de promotion notée qui transfère les entrées à court terme vers la mémoire.",
+        },
+        rem: {
+          title: "Phase REM",
+          description:
+            "Analyse des motifs visant à repérer les thèmes récurrents sur la période rétrospective.",
+        },
+      },
+      phaseFields: {
+        enabled: "Activé",
+        enabledHelp: "Exécuter cette phase pendant le balayage.",
+        lookbackDays: "Jours rétrospectifs",
+        lookbackDaysHelp:
+          "Période passée consultée par cette phase. Laisser vide pour utiliser la valeur par défaut du plugin.",
+        limit: "Limite",
+        limitHelp: "Nombre maximal d’entrées traitées par cette phase à chaque exécution.",
+        dedupeSimilarity: "Similarité de déduplication",
+        dedupeSimilarityHelp:
+          "Seuil de similarité au-delà duquel deux candidats sont considérés comme des doublons.",
+        minScore: "Score minimal",
+        minScoreHelp: "Score de promotion qu’une entrée doit atteindre.",
+        minRecallCount: "Nombre minimal de rappels",
+        minRecallCountHelp:
+          "Nombre de fois qu’une entrée doit être rappelée avant de pouvoir être promue.",
+        minUniqueQueries: "Nombre minimal de requêtes uniques",
+        minUniqueQueriesHelp:
+          "Nombre de requêtes distinctes devant avoir fait apparaître l’entrée.",
+        recencyHalfLifeDays: "Demi-vie de récence (jours)",
+        recencyHalfLifeDaysHelp:
+          "Vitesse à laquelle les anciens signaux de rappel perdent du poids.",
+        maxAgeDays: "Âge maximal (jours)",
+        maxAgeDaysHelp: "Ignorer les entrées à court terme plus anciennes que cette limite.",
+        maxPromotedSnippetTokens: "Nombre maximal de tokens dans l’extrait promu",
+        maxPromotedSnippetTokensHelp:
+          "Budget de tokens pour chaque extrait promu. La provenance reste associée.",
+        minPatternStrength: "Force minimale du motif",
+        minPatternStrengthHelp: "Force qu’un motif récurrent doit atteindre pour être signalé.",
+      },
+      agentScope: {
+        title: "Vue de l’agent",
+        description:
+          "Les paramètres ci-dessus sont globaux. Le journal des rêves, les décomptes à court terme et les actions de maintenance ci-dessous appartiennent à un seul agent.",
+        rowTitle: "Agent",
+      },
+      unsupported: {
+        title: "Paramètres des rêves",
+        rowTitle: "Non disponible pour ce moteur",
+        description:
+          "Le plugin {plugin} gère l’emplacement mémoire et son schéma de configuration ne comporte aucune section dédiée aux rêves. Ces paramètres ne peuvent donc pas être enregistrés. Changez de moteur dans l’onglet Vue d’ensemble pour les modifier.",
+      },
+    },
+  },
   sessionsPage: {
     hubTablistLabel: "Sections de fils",
   },
@@ -2363,6 +2534,21 @@ export const fr: TranslationMap = {
       description: "Permettez à Code Mode d'orchestrer des groupes de sous-agents en parallèle.",
       empty: "Aucun swarm actif.",
       defaultPhase: "Sans phase",
+    },
+    toolSearch: {
+      title: "Recherche d’outils",
+      description:
+        "Gardez visible un répertoire d’outils de taille limitée et reléguez le reste derrière la recherche, afin que les catalogues MCP et de plugins volumineux ne surchargent plus le prompt.",
+    },
+    localModelLean: {
+      title: "Outils allégés pour les modèles locaux",
+      description:
+        "Supprimez les outils par défaut lourds que les petits modèles locaux gèrent mal, afin de conserver un ensemble plus restreint qu’ils peuvent utiliser de manière fiable.",
+    },
+    auditMessages: {
+      title: "Métadonnées d’audit des messages",
+      description:
+        "Enregistrez des métadonnées sans contenu pour les conversations directes dans le registre d’audit. Le contenu des messages n’est jamais stocké.",
     },
   },
   aboutPage: {
@@ -3168,6 +3354,7 @@ export const fr: TranslationMap = {
     },
   },
   attention: {
+    cronErrorUnknown: "Erreur inconnue",
     cronFailed: "Échec de {count} tâche(s) cron",
     cronOverdue: "{count} tâche(s) cron en retard",
     modelAuthExpired: "Authentification du modèle expirée : {providers}",

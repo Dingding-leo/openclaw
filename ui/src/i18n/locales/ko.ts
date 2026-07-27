@@ -41,6 +41,7 @@ export const ko: TranslationMap = {
     unselect: "선택 해제",
     enabled: "사용",
     disabled: "사용 안 함",
+    failed: "실패",
     none: "없음",
     na: "해당 없음",
     never: "never",
@@ -602,6 +603,11 @@ export const ko: TranslationMap = {
     createOutcomeUnknown:
       "이 세션을 시작하는 동안 Gateway가 변경되었습니다. 이 작업을 다시 시작하기 전에 최근 세션을 확인하세요.",
     catalogUnavailable: "이 세션 대상을 사용할 수 없습니다.",
+  },
+  dashboardsPage: {
+    emptyTitle: "아직 대시보드가 없습니다",
+    emptyDescription: "스레드를 열고 대시보드 화면으로 전환하여 여기에 추가하세요.",
+    loadError: "대시보드를 불러올 수 없습니다: {error}",
   },
   sessionsView: {
     deletePreservedWorktrees:
@@ -1829,6 +1835,7 @@ export const ko: TranslationMap = {
     skillWorkshop: "Skill Workshop",
     nodes: "노드",
     chat: "채팅",
+    dashboards: "대시보드",
     custodian: "OpenClaw",
     config: "구성",
     profile: "프로필",
@@ -1836,6 +1843,7 @@ export const ko: TranslationMap = {
     appearance: "모양",
     automation: "자동화",
     mcp: "MCP",
+    memory: "메모리",
     infrastructure: "인프라",
     labs: "Labs",
     about: "정보",
@@ -1865,6 +1873,7 @@ export const ko: TranslationMap = {
     skillWorkshop: "제안이 실제 Skills가 되기 전에 검토하고, 다듬고, 적용하세요.",
     nodes: "페어링된 디바이스 및 명령.",
     chat: "빠른 개입을 위한 Gateway 채팅.",
+    dashboards: "대시보드 화면으로 열리는 스레드입니다.",
     custodian: "시스템 설정 및 관리.",
     config: "openclaw.json 편집.",
     profile: "에이전트의 통계, 연속 기록, 산호초에서의 활동을 확인하세요.",
@@ -1872,6 +1881,7 @@ export const ko: TranslationMap = {
     appearance: "테마, UI, 설정 마법사 설정.",
     automation: "명령, hooks, cron, plugins.",
     mcp: "MCP 서버, 인증, 도구 및 진단.",
+    memory: "메모리 엔진, 백엔드, 검색 및 드리밍입니다.",
     infrastructure: "Gateway, 웹, 브라우저, 미디어 설정.",
     labs: "실험적인 에이전트 및 도구 기능.",
     about: "Control UI 및 연결된 Gateway 빌드 ID입니다.",
@@ -2136,6 +2146,155 @@ export const ko: TranslationMap = {
     tlsVerifyOff: "TLS 검증 꺼짐",
     mtls: "mTLS",
   },
+  memoryPage: {
+    tablistLabel: "메모리 섹션",
+    tabs: {
+      overview: "개요",
+      search: "검색",
+      dreaming: "드리밍",
+    },
+    engine: {
+      title: "엔진",
+      description:
+        "하나의 메모리 플러그인만 메모리 슬롯을 담당합니다. 엔진을 선택하면 해당 엔진이 활성화되고 다른 엔진은 비활성화됩니다.",
+      rowTitle: "메모리 엔진",
+      off: "끔",
+      autoHint: "구성에 고정된 엔진이 없으므로 슬롯은 기본 소유자를 사용합니다.",
+      explicitHint: "이 엔진은 구성의 plugins.slots.memory에 고정되어 있습니다.",
+      offHint:
+        "구성에서 메모리가 꺼져 있습니다. plugins.slots.memory가 none으로 설정되어 있습니다.",
+      catalogUnavailable: "메모리 엔진을 변경하려면 Gateway에 연결하세요.",
+      changeFailed: "메모리 엔진을 변경할 수 없습니다",
+      disabledTitle: "이 엔진은 비활성화되어 있습니다",
+      disabledHint:
+        "메모리 슬롯이 이 플러그인을 가리키고 있지만 플러그인 자체가 비활성화되어 있어 메모리가 실행되지 않습니다.",
+      enable: "활성화",
+    },
+    backend: {
+      title: "백엔드",
+      description: "선택한 엔진에서 메모리를 저장하고 검색하는 방식입니다.",
+      rowTitle: "검색 백엔드",
+      builtin: "내장",
+      qmd: "QMD",
+      builtinHint: "메모리 파일은 OpenClaw 자체에서 인덱싱하고 검색합니다.",
+      qmdHint: "검색을 QMD에 위임합니다. 관련 설정은 아래에 표시됩니다.",
+    },
+    addons: {
+      title: "추가 기능",
+      description:
+        "이 플러그인들은 엔진 자리를 두고 경쟁하는 대신 엔진 위에 계층적으로 추가되므로, 어떤 조합이든 동시에 실행할 수 있습니다.",
+      activeMemory: {
+        title: "활성 메모리",
+      },
+      memoryWiki: {
+        title: "메모리 위키",
+      },
+      stateUnknown: "알 수 없음",
+      manage: "추가 기능 활성화 또는 비활성화",
+      manageLink: "플러그인 열기",
+    },
+    import: {
+      title: "가져오기",
+      description: "다른 어시스턴트의 기존 메모리를 에이전트 작업 공간으로 가져옵니다.",
+      link: "메모리 가져오기 열기",
+    },
+    search: {
+      intro: "메모리 재정의가 없는 모든 에이전트가 공유하는 임베딩 및 검색 기본값입니다.",
+    },
+    dreaming: {
+      intro:
+        "Dreaming은 모든 에이전트 작업 공간에서 하나의 관리형 cron 작업으로 실행되므로, 이 설정은 전역으로 적용됩니다. 이 설정은 {plugin} 플러그인에서 관리합니다.",
+      schedule: {
+        title: "일정",
+        description: "전체 작업이 실행되는 시점과 이를 서술할 모델을 설정합니다.",
+      },
+      frequency: {
+        label: "Dreaming 빈도",
+        help: "전체 Dreaming 작업(얕은 수면, REM, 깊은 수면)의 cron 실행 주기입니다. 플러그인 기본값을 사용하려면 비워 두세요.",
+        placeholder: "0 3 * * *",
+      },
+      timezone: {
+        label: "시간대",
+        help: "cron 실행 주기를 해석하는 데 사용되는 IANA 시간대입니다.",
+        placeholder: "Europe/Vienna",
+      },
+      model: {
+        label: "꿈 모델",
+        help: "꿈 일기 서술에 사용할 제공자/모델을 재정의합니다. 하위 에이전트 모델 재정의가 허용되어 있어야 합니다.",
+        placeholder: "anthropic/claude-sonnet-4-6",
+      },
+      verboseLogging: {
+        label: "상세 로깅",
+        help: "각 꿈 단계를 자세히 기록합니다. 임곗값을 조정할 때 유용합니다.",
+      },
+      storage: {
+        title: "저장소",
+        description: "승격된 기억과 꿈 보고서가 기록되는 위치입니다.",
+        modeLabel: "저장 모드",
+        modeHelp:
+          "인라인 모드는 메모리 파일에 기록하고, 분리 모드는 전용 보고서 파일에 보관합니다.",
+        modes: {
+          inline: "인라인",
+          separate: "분리",
+          both: "둘 다",
+        },
+        separateReportsLabel: "보고서 분리",
+        separateReportsHelp: "꿈 보고서를 기본 메모리 파일과 분리하여 보관합니다.",
+      },
+      phases: {
+        light: {
+          title: "얕은 수면 단계",
+          description: "최근 활동을 적은 비용으로 검토하여 재생 후보를 준비합니다.",
+        },
+        deep: {
+          title: "깊은 수면 단계",
+          description: "단기 항목에 점수를 매겨 메모리로 승격합니다.",
+        },
+        rem: {
+          title: "REM 수면 단계",
+          description: "조회 기간 전체에서 반복되는 주제를 찾는 패턴 탐색 단계입니다.",
+        },
+      },
+      phaseFields: {
+        enabled: "활성화됨",
+        enabledHelp: "정리 작업 중에 이 단계를 실행합니다.",
+        lookbackDays: "조회 기간(일)",
+        lookbackDaysHelp:
+          "이 단계에서 과거 데이터를 조회하는 기간입니다. 플러그인 기본값을 사용하려면 비워 두세요.",
+        limit: "제한",
+        limitHelp: "이 단계에서 실행당 처리하는 최대 항목 수입니다.",
+        dedupeSimilarity: "중복 제거 유사도",
+        dedupeSimilarityHelp: "두 후보를 중복으로 처리하는 기준 유사도입니다.",
+        minScore: "최소 점수",
+        minScoreHelp: "항목을 승격하는 데 필요한 점수입니다.",
+        minRecallCount: "최소 회상 횟수",
+        minRecallCountHelp: "항목을 승격하려면 최소한 이 횟수만큼 회상되어야 합니다.",
+        minUniqueQueries: "최소 고유 쿼리 수",
+        minUniqueQueriesHelp: "항목이 노출되어야 하는 서로 다른 쿼리의 수입니다.",
+        recencyHalfLifeDays: "최신성 반감기(일)",
+        recencyHalfLifeDaysHelp: "오래된 회상 신호의 가중치가 감소하는 속도입니다.",
+        maxAgeDays: "최대 경과 기간(일)",
+        maxAgeDaysHelp: "이 기간보다 오래된 단기 항목은 무시합니다.",
+        maxPromotedSnippetTokens: "승격된 스니펫의 최대 토큰 수",
+        maxPromotedSnippetTokensHelp:
+          "승격된 각 스니펫의 토큰 한도입니다. 출처 정보는 그대로 유지됩니다.",
+        minPatternStrength: "최소 패턴 강도",
+        minPatternStrengthHelp: "반복 패턴이 보고되기 위해 도달해야 하는 강도입니다.",
+      },
+      agentScope: {
+        title: "에이전트 보기",
+        description:
+          "위 설정은 전역 설정입니다. 아래의 꿈 일지, 단기 집계 및 유지 관리 작업은 하나의 에이전트에 속합니다.",
+        rowTitle: "에이전트",
+      },
+      unsupported: {
+        title: "꿈꾸기 설정",
+        rowTitle: "이 엔진에서는 사용할 수 없음",
+        description:
+          "{plugin} 플러그인이 메모리 슬롯을 소유하며 해당 구성 스키마에 꿈꾸기 섹션이 없으므로 이 설정을 저장할 수 없습니다. 편집하려면 개요 탭에서 엔진을 전환하세요.",
+      },
+    },
+  },
   sessionsPage: {
     hubTablistLabel: "스레드 섹션",
   },
@@ -2295,6 +2454,21 @@ export const ko: TranslationMap = {
       description: "Code Mode가 하위 에이전트 그룹을 병렬로 오케스트레이션할 수 있게 합니다.",
       empty: "활성 swarm이 없습니다.",
       defaultPhase: "단계 미지정",
+    },
+    toolSearch: {
+      title: "도구 검색",
+      description:
+        "제한된 도구 디렉터리만 표시하고 나머지는 검색을 통해 접근하도록 하여, 대규모 MCP 및 플러그인 카탈로그가 프롬프트를 복잡하게 만들지 않도록 합니다.",
+    },
+    localModelLean: {
+      title: "로컬 모델용 경량 도구",
+      description:
+        "소규모 로컬 모델이 제대로 처리하지 못하는 무거운 기본 도구를 제외하고, 안정적으로 사용할 수 있는 더 짧은 도구 세트만 남깁니다.",
+    },
+    auditMessages: {
+      title: "메시지 감사 메타데이터",
+      description:
+        "직접 대화의 콘텐츠를 포함하지 않는 메타데이터를 감사 원장에 기록합니다. 메시지 콘텐츠는 절대 저장되지 않습니다.",
     },
   },
   aboutPage: {
@@ -3085,6 +3259,7 @@ export const ko: TranslationMap = {
     },
   },
   attention: {
+    cronErrorUnknown: "알 수 없는 오류",
     cronFailed: "cron 작업 {count}개 실패",
     cronOverdue: "cron 작업 {count}개 기한 초과",
     modelAuthExpired: "모델 인증 만료됨: {providers}",

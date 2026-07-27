@@ -41,6 +41,7 @@ export const vi: TranslationMap = {
     unselect: "Bỏ chọn",
     enabled: "Đã bật",
     disabled: "Đã tắt",
+    failed: "Không đạt",
     none: "không có",
     na: "n/a",
     never: "không bao giờ",
@@ -607,6 +608,12 @@ export const vi: TranslationMap = {
     createOutcomeUnknown:
       "Gateway đã thay đổi trong khi phiên này đang khởi động. Hãy kiểm tra các phiên gần đây trước khi bắt đầu lại tác vụ này.",
     catalogUnavailable: "Đích của phiên này hiện không khả dụng.",
+  },
+  dashboardsPage: {
+    emptyTitle: "Chưa có bảng điều khiển",
+    emptyDescription:
+      "Mở một luồng và chuyển sang giao diện Bảng điều khiển để thêm luồng đó vào đây.",
+    loadError: "Không thể tải các bảng điều khiển: {error}",
   },
   sessionsView: {
     deletePreservedWorktrees:
@@ -1840,6 +1847,7 @@ export const vi: TranslationMap = {
     skillWorkshop: "Xưởng kỹ năng",
     nodes: "Nút",
     chat: "Trò chuyện",
+    dashboards: "Bảng điều khiển",
     custodian: "OpenClaw",
     config: "Cấu hình",
     profile: "Hồ sơ",
@@ -1847,6 +1855,7 @@ export const vi: TranslationMap = {
     appearance: "Giao diện",
     automation: "Tự động hóa",
     mcp: "MCP",
+    memory: "Bộ nhớ",
     infrastructure: "Hạ tầng",
     labs: "Labs",
     about: "Giới thiệu",
@@ -1877,6 +1886,7 @@ export const vi: TranslationMap = {
       "Xem xét, tinh chỉnh và áp dụng các đề xuất trước khi chúng trở thành kỹ năng đang hoạt động.",
     nodes: "Thiết bị đã ghép nối và lệnh.",
     chat: "Trò chuyện Gateway để can thiệp nhanh.",
+    dashboards: "Các luồng mở trên giao diện bảng điều khiển.",
     custodian: "Thiết lập và bảo trì hệ thống.",
     config: "Chỉnh sửa openclaw.json.",
     profile: "Thống kê, chuỗi hoạt động và cuộc sống trong rạn san hô của agent của bạn.",
@@ -1884,6 +1894,7 @@ export const vi: TranslationMap = {
     appearance: "Giao diện, UI và cài đặt trình hướng dẫn thiết lập.",
     automation: "Lệnh, hook, cron và plugin.",
     mcp: "Máy chủ MCP, xác thực, công cụ và chẩn đoán.",
+    memory: "Công cụ bộ nhớ, backend, tìm kiếm và mơ.",
     infrastructure: "Cài đặt Gateway, web, trình duyệt và phương tiện.",
     labs: "Khả năng thử nghiệm của agent và công cụ.",
     about: "Control UI và Gateway đã kết nối tạo danh tính bản dựng.",
@@ -2154,6 +2165,159 @@ export const vi: TranslationMap = {
     tlsVerifyOff: "TLS verify tắt",
     mtls: "mTLS",
   },
+  memoryPage: {
+    tablistLabel: "Các mục bộ nhớ",
+    tabs: {
+      overview: "Tổng quan",
+      search: "Tìm kiếm",
+      dreaming: "Mơ",
+    },
+    engine: {
+      title: "Công cụ",
+      description:
+        "Chỉ một plugin bộ nhớ duy nhất quản lý khe bộ nhớ. Việc chọn một công cụ sẽ bật công cụ đó và tắt các công cụ khác.",
+      rowTitle: "Công cụ bộ nhớ",
+      off: "Tắt",
+      autoHint:
+        "Không có công cụ nào được ghim trong cấu hình, vì vậy khe này sẽ dùng chủ sở hữu mặc định.",
+      explicitHint: "Công cụ này được ghim trong cấu hình tại plugins.slots.memory.",
+      offHint: "Bộ nhớ đã bị tắt trong cấu hình: plugins.slots.memory được đặt thành none.",
+      catalogUnavailable: "Kết nối với Gateway để thay đổi công cụ bộ nhớ.",
+      changeFailed: "Không thể thay đổi công cụ bộ nhớ",
+      disabledTitle: "Công cụ này đã bị tắt",
+      disabledHint:
+        "Khe bộ nhớ trỏ đến plugin này, nhưng bản thân plugin đã bị tắt, vì vậy bộ nhớ không hoạt động.",
+      enable: "Bật",
+    },
+    backend: {
+      title: "Backend",
+      description: "Cách bộ nhớ được lưu trữ và truy xuất cho công cụ đã chọn.",
+      rowTitle: "Phần phụ trợ truy xuất",
+      builtin: "Tích hợp sẵn",
+      qmd: "QMD",
+      builtinHint: "Các tệp bộ nhớ được chính OpenClaw lập chỉ mục và tìm kiếm.",
+      qmdHint: "Việc truy xuất được giao cho QMD. Các cài đặt của QMD xuất hiện bên dưới.",
+    },
+    addons: {
+      title: "Tiện ích bổ sung",
+      description:
+        "Các plugin này hoạt động bổ sung trên engine thay vì cạnh tranh vị trí, vì vậy có thể chạy đồng thời với bất kỳ tổ hợp nào.",
+      activeMemory: {
+        title: "Bộ nhớ chủ động",
+      },
+      memoryWiki: {
+        title: "Wiki bộ nhớ",
+      },
+      stateUnknown: "Không xác định",
+      manage: "Bật hoặc tắt tiện ích bổ sung",
+      manageLink: "Mở Plugins",
+    },
+    import: {
+      title: "Nhập",
+      description: "Đưa bộ nhớ hiện có từ các trợ lý khác vào không gian làm việc của tác nhân.",
+      link: "Mở tính năng Nhập bộ nhớ",
+    },
+    search: {
+      intro:
+        "Các thiết lập mặc định về nhúng và truy xuất được dùng chung cho mọi tác nhân không có cấu hình ghi đè bộ nhớ.",
+    },
+    dreaming: {
+      intro:
+        "Dreaming chạy dưới dạng một tác vụ cron được quản lý trên mọi không gian làm việc của tác nhân, vì vậy các cài đặt này mang tính toàn cục. Chúng do plugin {plugin} quản lý.",
+      schedule: {
+        title: "Lịch trình",
+        description: "Thời điểm chạy lượt quét toàn bộ và mô hình dùng để tường thuật.",
+      },
+      frequency: {
+        label: "Tần suất Dreaming",
+        help: "Nhịp cron cho lượt Dreaming toàn bộ (nhẹ, REM, rồi sâu). Để trống để dùng mặc định của plugin.",
+        placeholder: "0 3 * * *",
+      },
+      timezone: {
+        label: "Múi giờ",
+        help: "Múi giờ IANA dùng để diễn giải nhịp cron.",
+        placeholder: "Europe/Vienna",
+      },
+      model: {
+        label: "Mô hình giấc mơ",
+        help: "Ghi đè nhà cung cấp/mô hình cho phần tường thuật nhật ký giấc mơ. Yêu cầu cho phép ghi đè mô hình tác nhân phụ.",
+        placeholder: "anthropic/claude-sonnet-4-6",
+      },
+      verboseLogging: {
+        label: "Ghi nhật ký chi tiết",
+        help: "Ghi chi tiết từng giai đoạn giấc mơ. Hữu ích khi tinh chỉnh các ngưỡng.",
+      },
+      storage: {
+        title: "Lưu trữ",
+        description: "Vị trí ghi các ký ức được lưu giữ và báo cáo giấc mơ.",
+        modeLabel: "Chế độ lưu trữ",
+        modeHelp:
+          "Chế độ nội tuyến ghi vào tệp bộ nhớ; chế độ riêng biệt duy trì một tệp báo cáo chuyên biệt.",
+        modes: {
+          inline: "Nội tuyến",
+          separate: "Riêng biệt",
+          both: "Cả hai",
+        },
+        separateReportsLabel: "Báo cáo riêng biệt",
+        separateReportsHelp: "Tách báo cáo giấc mơ khỏi tệp bộ nhớ chính.",
+      },
+      phases: {
+        light: {
+          title: "Giai đoạn nhẹ",
+          description:
+            "Lượt xử lý ít tốn tài nguyên đối với hoạt động gần đây để chuẩn bị các mục có thể phát lại.",
+        },
+        deep: {
+          title: "Giai đoạn sâu",
+          description: "Lượt lưu giữ có chấm điểm để chuyển các mục ngắn hạn vào bộ nhớ.",
+        },
+        rem: {
+          title: "Giai đoạn REM",
+          description:
+            "Lượt phân tích mẫu nhằm tìm các chủ đề lặp lại trong khoảng thời gian xem lại.",
+        },
+      },
+      phaseFields: {
+        enabled: "Đã bật",
+        enabledHelp: "Chạy giai đoạn này trong quá trình quét.",
+        lookbackDays: "Số ngày xem lại",
+        lookbackDaysHelp:
+          "Giai đoạn này đọc dữ liệu lùi lại bao xa. Để trống để sử dụng giá trị mặc định của plugin.",
+        limit: "Giới hạn",
+        limitHelp: "Số mục tối đa mà giai đoạn này xử lý trong mỗi lần chạy.",
+        dedupeSimilarity: "Độ tương đồng để loại bỏ trùng lặp",
+        dedupeSimilarityHelp:
+          "Hai ứng viên có độ tương đồng cao hơn mức này sẽ được coi là trùng lặp.",
+        minScore: "Điểm tối thiểu",
+        minScoreHelp: "Điểm đề bạt mà một mục phải đạt được.",
+        minRecallCount: "Số lần truy xuất tối thiểu",
+        minRecallCountHelp: "Số lần một mục phải được truy xuất trước khi có thể được đề bạt.",
+        minUniqueQueries: "Số truy vấn riêng biệt tối thiểu",
+        minUniqueQueriesHelp: "Số truy vấn riêng biệt phải từng đưa mục này lên.",
+        recencyHalfLifeDays: "Chu kỳ bán rã theo độ mới (ngày)",
+        recencyHalfLifeDaysHelp: "Tốc độ các tín hiệu truy xuất cũ mất trọng số.",
+        maxAgeDays: "Tuổi tối đa (ngày)",
+        maxAgeDaysHelp: "Bỏ qua các mục ngắn hạn cũ hơn khoảng thời gian này.",
+        maxPromotedSnippetTokens: "Số token tối đa của đoạn trích được đề bạt",
+        maxPromotedSnippetTokensHelp:
+          "Ngân sách token cho mỗi đoạn trích được đề bạt. Thông tin nguồn gốc vẫn được đính kèm.",
+        minPatternStrength: "Độ mạnh mẫu tối thiểu",
+        minPatternStrengthHelp: "Độ mạnh mà một mẫu lặp lại phải đạt được để được báo cáo.",
+      },
+      agentScope: {
+        title: "Chế độ xem tác nhân",
+        description:
+          "Các cài đặt ở trên áp dụng chung. Nhật ký giấc mơ, số lượng ngắn hạn và các thao tác bảo trì bên dưới thuộc về một tác nhân.",
+        rowTitle: "Tác nhân",
+      },
+      unsupported: {
+        title: "Cài đặt giấc mơ",
+        rowTitle: "Không khả dụng cho công cụ này",
+        description:
+          "Plugin {plugin} sở hữu khe bộ nhớ và lược đồ cấu hình của plugin này không có phần giấc mơ, nên không thể lưu các cài đặt này. Hãy chuyển đổi công cụ trong tab Tổng quan để chỉnh sửa chúng.",
+      },
+    },
+  },
   sessionsPage: {
     hubTablistLabel: "Các mục Threads",
   },
@@ -2312,6 +2476,21 @@ export const vi: TranslationMap = {
       description: "Cho phép Chế độ Code điều phối các nhóm tác nhân con song song.",
       empty: "Không có swarm nào đang hoạt động.",
       defaultPhase: "Chưa phân giai đoạn",
+    },
+    toolSearch: {
+      title: "Tìm kiếm công cụ",
+      description:
+        "Hiển thị một danh mục công cụ có giới hạn và để phần còn lại được truy cập qua tìm kiếm, nhờ đó các danh mục MCP và plugin lớn không còn làm chật lời nhắc.",
+    },
+    localModelLean: {
+      title: "Bộ công cụ tinh gọn cho mô hình cục bộ",
+      description:
+        "Loại bỏ các công cụ mặc định nặng mà những mô hình cục bộ nhỏ hơn xử lý kém, chỉ để lại một bộ công cụ ngắn gọn hơn mà chúng có thể sử dụng đáng tin cậy.",
+    },
+    auditMessages: {
+      title: "Siêu dữ liệu kiểm tra tin nhắn",
+      description:
+        "Ghi lại siêu dữ liệu không chứa nội dung cho các cuộc trò chuyện trực tiếp trong sổ cái kiểm tra. Nội dung tin nhắn không bao giờ được lưu trữ.",
     },
   },
   aboutPage: {
@@ -3108,6 +3287,7 @@ export const vi: TranslationMap = {
     },
   },
   attention: {
+    cronErrorUnknown: "Lỗi không xác định",
     cronFailed: "{count} tác vụ cron không thành công",
     cronOverdue: "{count} tác vụ cron quá hạn",
     modelAuthExpired: "Xác thực mô hình đã hết hạn: {providers}",

@@ -41,6 +41,7 @@ export const ja_JP: TranslationMap = {
     unselect: "選択解除",
     enabled: "有効",
     disabled: "無効",
+    failed: "失敗",
     none: "なし",
     na: "n/a",
     never: "never",
@@ -614,6 +615,11 @@ export const ja_JP: TranslationMap = {
     createOutcomeUnknown:
       "このセッションの開始中に Gateway が変更されました。このタスクを再度開始する前に、最近のセッションを確認してください。",
     catalogUnavailable: "このセッションのターゲットは利用できません。",
+  },
+  dashboardsPage: {
+    emptyTitle: "ダッシュボードはまだありません",
+    emptyDescription: "スレッドを開き、ダッシュボード画面に切り替えると、ここに追加されます。",
+    loadError: "ダッシュボードを読み込めませんでした: {error}",
   },
   sessionsView: {
     deletePreservedWorktrees:
@@ -1847,6 +1853,7 @@ export const ja_JP: TranslationMap = {
     skillWorkshop: "Skill Workshop",
     nodes: "ノード",
     chat: "チャット",
+    dashboards: "ダッシュボード",
     custodian: "OpenClaw",
     config: "設定",
     profile: "プロフィール",
@@ -1854,6 +1861,7 @@ export const ja_JP: TranslationMap = {
     appearance: "表示",
     automation: "自動化",
     mcp: "MCP",
+    memory: "メモリ",
     infrastructure: "インフラストラクチャ",
     labs: "Labs",
     about: "概要",
@@ -1883,6 +1891,7 @@ export const ja_JP: TranslationMap = {
     skillWorkshop: "提案がライブスキルになる前に、確認、調整、適用します。",
     nodes: "ペアリング済みデバイスとコマンド。",
     chat: "すばやく介入するための Gateway チャット。",
+    dashboards: "ダッシュボード画面で開くスレッド。",
     custodian: "システムのセットアップとケア。",
     config: "openclaw.json を編集。",
     profile: "エージェントの統計、連続記録、リーフでの活動。",
@@ -1890,6 +1899,7 @@ export const ja_JP: TranslationMap = {
     appearance: "テーマ、UI、セットアップウィザードの設定。",
     automation: "コマンド、フック、cron、プラグイン。",
     mcp: "MCP サーバー、認証、ツール、診断。",
+    memory: "メモリエンジン、バックエンド、検索、ドリーミング。",
     infrastructure: "Gateway、Web、ブラウザー、メディアの設定。",
     labs: "実験的なエージェントとツールの機能。",
     about: "Control UI と接続された Gateway のビルド ID。",
@@ -2161,6 +2171,158 @@ export const ja_JP: TranslationMap = {
     tlsVerifyOff: "TLS 検証オフ",
     mtls: "mTLS",
   },
+  memoryPage: {
+    tablistLabel: "メモリセクション",
+    tabs: {
+      overview: "概要",
+      search: "検索",
+      dreaming: "ドリーミング",
+    },
+    engine: {
+      title: "エンジン",
+      description:
+        "メモリスロットを使用できるメモリプラグインは1つだけです。エンジンを選択すると、そのエンジンが有効になり、ほかは無効になります。",
+      rowTitle: "メモリエンジン",
+      off: "オフ",
+      autoHint:
+        "設定でエンジンが固定されていないため、スロットはデフォルトの所有者にフォールバックします。",
+      explicitHint: "このエンジンは、設定の plugins.slots.memory で固定されています。",
+      offHint:
+        "設定でメモリがオフになっています: plugins.slots.memory が none に設定されています。",
+      catalogUnavailable: "メモリエンジンを変更するには Gateway に接続してください。",
+      changeFailed: "メモリエンジンを変更できませんでした",
+      disabledTitle: "このエンジンは無効です",
+      disabledHint:
+        "メモリスロットはこのプラグインを参照していますが、プラグイン自体が無効になっているため、メモリは実行されていません。",
+      enable: "有効化：",
+    },
+    backend: {
+      title: "バックエンド",
+      description: "選択したエンジンでメモリを保存および取得する方法です。",
+      rowTitle: "取得バックエンド",
+      builtin: "組み込み",
+      qmd: "QMD",
+      builtinHint: "メモリファイルはOpenClaw自体によってインデックス化および検索されます。",
+      qmdHint: "取得処理はQMDに委任されます。設定は以下に表示されます。",
+    },
+    addons: {
+      title: "アドオン",
+      description:
+        "これらのプラグインはスロットを奪い合うのではなく、エンジンに機能を追加するため、任意の組み合わせを同時に実行できます。",
+      activeMemory: {
+        title: "アクティブメモリ",
+      },
+      memoryWiki: {
+        title: "メモリWiki",
+      },
+      stateUnknown: "不明",
+      manage: "アドオンを有効または無効にする",
+      manageLink: "プラグインを開く",
+    },
+    import: {
+      title: "インポート",
+      description: "他のアシスタントの既存メモリをエージェントのワークスペースに取り込みます。",
+      link: "メモリインポートを開く",
+    },
+    search: {
+      intro:
+        "メモリのオーバーライドがないすべてのエージェントで共有される、埋め込みと取得のデフォルト設定です。",
+    },
+    dreaming: {
+      intro:
+        "Dreamingはすべてのエージェントワークスペースで単一の管理対象cronジョブとして実行されるため、これらの設定はグローバルです。これらは{plugin}プラグインによって管理されます。",
+      schedule: {
+        title: "スケジュール",
+        description: "完全スイープを実行するタイミングと、それを叙述するモデルを設定します。",
+      },
+      frequency: {
+        label: "Dreamingの頻度",
+        help: "Dreamingの完全スイープ（浅い眠り、REM、深い眠り）のcron実行間隔です。プラグインのデフォルトを使用する場合は空欄のままにしてください。",
+        placeholder: "0 3 * * *",
+      },
+      timezone: {
+        label: "タイムゾーン",
+        help: "cron の実行間隔の解釈に使用する IANA タイムゾーン。",
+        placeholder: "Europe/Vienna",
+      },
+      model: {
+        label: "ドリーミングモデル",
+        help: "夢日記のナレーションに使用するプロバイダー／モデルのオーバーライド。サブエージェントのモデルオーバーライドが許可されている必要があります。",
+        placeholder: "anthropic/claude-sonnet-4-6",
+      },
+      verboseLogging: {
+        label: "詳細ログ",
+        help: "各ドリーミングフェーズを詳細に記録します。しきい値の調整時に役立ちます。",
+      },
+      storage: {
+        title: "ストレージ",
+        description: "昇格された記憶とドリーミングレポートの書き込み先。",
+        modeLabel: "ストレージモード",
+        modeHelp:
+          "「インライン」はメモリファイルに書き込み、「分離」は専用のレポートファイルに保存します。",
+        modes: {
+          inline: "インライン",
+          separate: "分離",
+          both: "両方",
+        },
+        separateReportsLabel: "レポートを分離",
+        separateReportsHelp:
+          "ドリーミングレポートをメインのメモリファイルに含めず、別に保存します。",
+      },
+      phases: {
+        light: {
+          title: "ライトフェーズ",
+          description: "最近のアクティビティを低コストで処理し、再生候補を準備します。",
+        },
+        deep: {
+          title: "ディープフェーズ",
+          description: "短期エントリを評価し、記憶へ昇格させる処理です。",
+        },
+        rem: {
+          title: "REMフェーズ",
+          description: "ルックバック期間全体から繰り返し現れるテーマを探すパターン処理。",
+        },
+      },
+      phaseFields: {
+        enabled: "有効",
+        enabledHelp: "スイープ中にこのフェーズを実行します。",
+        lookbackDays: "ルックバック日数",
+        lookbackDaysHelp:
+          "このフェーズがどこまで過去を参照するかを指定します。プラグインのデフォルト値を使用する場合は空欄にします。",
+        limit: "上限",
+        limitHelp: "このフェーズが1回の実行で処理するエントリの最大数。",
+        dedupeSimilarity: "重複判定の類似度",
+        dedupeSimilarityHelp: "2つの候補を重複として扱う類似度のしきい値。",
+        minScore: "最小スコア",
+        minScoreHelp: "エントリの昇格に必要なスコア。",
+        minRecallCount: "最小想起回数",
+        minRecallCountHelp: "エントリが昇格可能になるまでに必要な想起回数。",
+        minUniqueQueries: "一意のクエリの最小数",
+        minUniqueQueriesHelp: "エントリを検索結果に表示した個別のクエリ数。",
+        recencyHalfLifeDays: "新しさの半減期（日）",
+        recencyHalfLifeDaysHelp: "古い想起シグナルの重みが減少する速さ。",
+        maxAgeDays: "最大経過日数",
+        maxAgeDaysHelp: "これより古い短期エントリを無視します。",
+        maxPromotedSnippetTokens: "昇格するスニペットの最大トークン数",
+        maxPromotedSnippetTokensHelp:
+          "昇格された各スニペットのトークン予算。出所情報は保持されます。",
+        minPatternStrength: "最小パターン強度",
+        minPatternStrengthHelp: "繰り返し発生するパターンが報告対象となるために必要な強度。",
+      },
+      agentScope: {
+        title: "エージェントビュー",
+        description:
+          "上記の設定はグローバルです。以下の夢日記、短期カウント、メンテナンス操作は1つのエージェントに属します。",
+        rowTitle: "エージェント",
+      },
+      unsupported: {
+        title: "夢見設定",
+        rowTitle: "このエンジンでは利用できません",
+        description:
+          "{plugin} プラグインがメモリスロットを管理しており、その設定スキーマに夢見セクションがないため、これらの設定は保存できません。編集するには、概要タブでエンジンを切り替えてください。",
+      },
+    },
+  },
   sessionsPage: {
     hubTablistLabel: "スレッドセクション",
   },
@@ -2321,6 +2483,21 @@ export const ja_JP: TranslationMap = {
         "Code Modeがサブエージェントのグループを並列でオーケストレーションできるようにします。",
       empty: "アクティブなswarmはありません。",
       defaultPhase: "フェーズなし",
+    },
+    toolSearch: {
+      title: "ツール検索",
+      description:
+        "表示するツールディレクトリを一定範囲に抑え、残りを検索経由で利用できるようにすることで、大規模な MCP やプラグインのカタログがプロンプトを圧迫するのを防ぎます。",
+    },
+    localModelLean: {
+      title: "ローカルモデル向けの軽量ツール",
+      description:
+        "小規模なローカルモデルでは扱いにくい高負荷なデフォルトツールを除外し、確実に使用できる短いツールセットを残します。",
+    },
+    auditMessages: {
+      title: "メッセージ監査メタデータ",
+      description:
+        "ダイレクトな会話について、内容を含まないメタデータを監査台帳に記録します。メッセージの内容が保存されることはありません。",
     },
   },
   aboutPage: {
@@ -3119,6 +3296,7 @@ export const ja_JP: TranslationMap = {
     },
   },
   attention: {
+    cronErrorUnknown: "不明なエラー",
     cronFailed: "{count} 件の cron ジョブが失敗しました",
     cronOverdue: "{count} 件の cron ジョブが期限を超過しています",
     modelAuthExpired: "モデル認証の有効期限が切れました: {providers}",
