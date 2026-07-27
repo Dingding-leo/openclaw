@@ -8734,11 +8734,6 @@
       "translated": "Reconnaissance vocale indisponible"
     },
     {
-      "id": "native.android.47a59f8798682ea0",
-      "source": "Ready",
-      "translated": "Prêt"
-    },
-    {
       "id": "native.android.8532cc9537b69224",
       "source": "Start failed: $message",
       "translated": "Échec du démarrage : $message"
@@ -8792,6 +8787,11 @@
       "id": "native.android.13a84ef8eb52312d",
       "source": "Talk failed: $message",
       "translated": "Échec de la conversation : $message"
+    },
+    {
+      "id": "native.android.47a59f8798682ea0",
+      "source": "Ready",
+      "translated": "Prêt"
     },
     {
       "id": "native.android.bd863d5e8979cd79",
